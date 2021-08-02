@@ -1,21 +1,27 @@
 #include "TcpClient.hpp"
-
+#include <QDebug>
 TcpClient::TcpClient(QObject* parent) : QObject(parent)
 {
-    connect(&_socket, &QTcpSocket::connected, this, &TcpClient::onConnected);
-    connect(&_socket, &QTcpSocket::errorOccurred, this, &TcpClient::onErrorOccurred);
-    connect(&_socket, &QTcpSocket::readyRead, this, &TcpClient::onReadyRead);
+    connectToServer();
+    connect(&m_socket, &QTcpSocket::connected, this, &TcpClient::onConnected);
+    connect(&m_socket, &QTcpSocket::errorOccurred, this, &TcpClient::onErrorOccurred);
+    connect(&m_socket, &QTcpSocket::readyRead, this, &TcpClient::onReadyRead);
 }
 
-void TcpClient::connectToServer(const QString& ip, const QString& port)
+void TcpClient::connectToServer()
 {
-    _socket.connectToHost(ip, port.toUInt());
+    m_socket.connectToHost(m_ip,m_port);
 }
 
+void TcpClient::login(const QString& login, const QString& pass)
+{
+    qInfo()<<(m_uInform.login=login);
+    qInfo()<<(m_uInform.pass=pass);
+
+}
 void TcpClient::sendMessage(const QString& message)
 {
-    _socket.write(message.toUtf8());
-    _socket.flush();
+    m_socket.write(message.toUtf8());
 }
 
 void TcpClient::onConnected()
@@ -25,8 +31,8 @@ void TcpClient::onConnected()
 
 void TcpClient::onReadyRead()
 {
-    message = _socket.readAll();
-    emit newMessage(message);
+    m_message = m_socket.readAll();
+    emit newMessage(m_message);
 }
 
 void TcpClient::onErrorOccurred(QAbstractSocket::SocketError error)

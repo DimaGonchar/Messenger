@@ -23,43 +23,40 @@ Window {
         RowLayout {
             Layout.fillWidth: true
             TextField {
-                id: textFieldIp
-                placeholderText: qsTr("Server IP")
+                id: login
+                placeholderText: qsTr("Login")
                 Layout.fillWidth: true
-                onAccepted: buttonConnect.clicked()
+                //onAccepted: buttonConnect.clicked()
             }
             TextField {
-                id: textFieldPort
-                placeholderText: qsTr("Server port")
+                id: password
+                placeholderText: qsTr("Password")
                 Layout.fillWidth: true
-                onAccepted: buttonConnect.clicked()
+                //onAccepted: buttonConnect.clicked()
             }
             Button {
-                id: buttonConnect
-                text: qsTr("Connect")
-                onClicked: client.connectToServer(textFieldIp.text, textFieldPort.text)
+                id: buttonLogin
+                text: qsTr("login")
+                onClicked: client.login(login.text, password.text)
             }
         }
-        ListView {
-            Layout.fillHeight: true
+       ListView {
+           Layout.fillHeight: true
             Layout.fillWidth: true
-            clip: true
-            model: ListModel {
-                id: listModelMessages
-                ListElement {
-                    message: "Welcome to chat client"
-                }
-            }
+           clip: true
+           model: ListModel {
+             id: listModelMessages
+         }
             delegate: ItemDelegate {
-                text: message
+               text: message
             }
             ScrollBar.vertical: ScrollBar {}
         }
         RowLayout {
             Layout.fillWidth: true
             TextField {
-                id: textFieldMessage
-                placeholderText: qsTr("Your message ...")
+                id: message
+                placeholderText: qsTr("write here ...")
                 Layout.fillWidth: true
                 onAccepted: buttonSend.clicked()
             }
@@ -67,7 +64,7 @@ Window {
                 id: buttonSend
                 text: qsTr("Send")
                 onClicked: {
-                    client.sendMessage(textFieldMessage.text)
+                    client.sendMessage(message.text)
                     textFieldMessage.clear()
                 }
             }
