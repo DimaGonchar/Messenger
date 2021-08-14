@@ -1,5 +1,7 @@
 <RCC>
     <qresource prefix="/">
+        <file>telegram1.qml</file>
         <file>main.qml</file>
+        <file>SimplePage.qml</file>
     </qresource>
 </RCC>

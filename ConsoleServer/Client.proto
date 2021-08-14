@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+message ProtoClient
+{
+	string login=1;
+	string pass =2;
+	string userName=3;
+	string userMessage=4;
+
+	enum Request
+	{
+	UNKNOWN_ERROR=0;
+	REGISTER_USER=1;
+	AUTHORIZE_USER=2;
+	LOG_OUT_ACCOUNT=3;
+	SEND_MESSAGE=4;
+	}
+	optional Request request=5;
+}
