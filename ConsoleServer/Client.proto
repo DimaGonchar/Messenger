@@ -1,19 +1,35 @@
 syntax = "proto3";
 
-message ProtoClient
-{
-	string login=1;
-	string pass =2;
-	string userName=3;
-	string userMessage=4;
-
-	enum Request
+	message ClientRegistrationNotification
 	{
-	UNKNOWN_ERROR=0;
-	REGISTER_USER=1;
-	AUTHORIZE_USER=2;
-	LOG_OUT_ACCOUNT=3;
-	SEND_MESSAGE=4;
+	 uint32 typeNotification=1;
+     string login=2;
+	 string pass =3;
+	 string userName=4;
 	}
-	optional Request request=5;
-}
+
+	message ClientSignInNotification
+	{
+	 uint32 typeNotification=1;
+	 string login=2;
+	 string pass =3;
+	 uint64 sesionId=4;
+	 uint64 userId=5;
+	};
+
+     message ClientSendMessageNotification
+    {
+	  uint32 typeNotification=1;
+      uint64 senderId=2;
+	  uint64 receiverId=3;
+      string text=4;
+    };
+
+	message LogOutNotification
+	{
+	    uint32 typeNotification=1;
+		string name=2;
+		uint64 id=3;
+		uint64 sesionId=4;
+	};
+

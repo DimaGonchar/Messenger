@@ -1,17 +1,52 @@
 syntax = "proto3";
 
-message ProtoServer 
-{
-   enum Response
+   message ServerLogInNotification
    {
-   	UNKNOWN_ERROR=0;
-	USER_EXISTS=1;
-	USER_NOT_FOUND=2;
-	NO_CORRECT_LOGIN=3;
-	NO_CORRECT_PASS=4;
-	REGISTRATION_IS_SUCCESFUL=5;
-	AUTHORIZATION_IS_SUCCESFUL=6;
-	USER_LOGGED_IN=7;
+     uint32 typeNotification=1;
+     string userLogin=2;
+	 string userPass=3;
+     uint64 sesionId=4;
+     uint64 userId=5;
+
+	 enum Response
+	 {
+     AUTHORIZATION_IS_SUCCESFUL=0;
+	 AUTHORIZATION_FAILD=1;
+	 USER_NOT_FOUND=2;
+	 }
+	  optional Response respose =6;
    }
-   optional Response responce=1;
-}
+
+   message ServerRegistrationNotification
+   {
+          uint32 typeNotification=1;
+          uint64 userId=2;
+		  uint64 sesionId=3;
+
+		  enum Response
+		  {
+		   REGISTRATION_IS_SUCCESFUL=0;
+		   USER_EXISTS=1;
+		  }
+		  optional Response response =4;
+   }
+
+   message ServerMessageNotification
+   {
+      uint32 typeNotification=1;
+      string userName=2;
+      uint64 senderId=3;
+      string text=4;
+   }
+
+   message NewUserConnectNotification
+   {      uint32 typeNotification=1;
+		  string userName=2;
+   }
+
+
+
+
+
+
+

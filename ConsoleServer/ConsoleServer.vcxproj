@@ -151,33 +151,48 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ChatServer.cpp" />
     <ClCompile Include="Client.pb.cc" />
-    <ClCompile Include="ClientDataParser.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="NotificationTupeMoc.pb.cc" />
     <ClCompile Include="Server.cpp" />
+    <ClCompile Include="Client.cpp" />
     <ClCompile Include="Server.pb.cc" />
-    <ClCompile Include="User.cpp" />
+    <ClCompile Include="UserInformation.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="chating history" />
     <None Include="Client.proto" />
     <None Include="cpp.hint" />
+    <None Include="NotificationTupeMoc.proto" />
+    <None Include="packages.config" />
     <None Include="Server.proto" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="Server.h" />
   </ItemGroup>
   <ItemGroup>
+    <QtMoc Include="ChatServer.h" />
     <ClInclude Include="Client.pb.h" />
-    <ClInclude Include="ClientDataParser.h" />
     <ClInclude Include="Codes.h" />
+    <QtMoc Include="Client.h" />
+    <ClInclude Include="NotificationTupeMoc.pb.h" />
+    <ClInclude Include="NotificationType.hpp" />
     <ClInclude Include="Server.pb.h" />
-    <ClInclude Include="User.h" />
+    <ClInclude Include="UserInformation.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
     <Import Project="$(QtMsBuild)\qt.targets" />
   </ImportGroup>
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="packages\nl.cqm.Qt5Core.redist.5.9.6\build\native\nl.cqm.Qt5Core.redist.targets" Condition="Exists('packages\nl.cqm.Qt5Core.redist.5.9.6\build\native\nl.cqm.Qt5Core.redist.targets')" />
+    <Import Project="packages\nl.cqm.Qt5Core.5.9.6\build\native\nl.cqm.Qt5Core.targets" Condition="Exists('packages\nl.cqm.Qt5Core.5.9.6\build\native\nl.cqm.Qt5Core.targets')" />
   </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\nl.cqm.Qt5Core.redist.5.9.6\build\native\nl.cqm.Qt5Core.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\nl.cqm.Qt5Core.redist.5.9.6\build\native\nl.cqm.Qt5Core.redist.targets'))" />
+    <Error Condition="!Exists('packages\nl.cqm.Qt5Core.5.9.6\build\native\nl.cqm.Qt5Core.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\nl.cqm.Qt5Core.5.9.6\build\native\nl.cqm.Qt5Core.targets'))" />
+  </Target>
 </Project>
