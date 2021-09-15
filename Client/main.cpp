@@ -18,7 +18,6 @@ int main(int argc, char *argv[])
             if (!obj && url == objUrl)
                 QCoreApplication::exit(-1);
         }, Qt::QueuedConnection);
-
     TcpClient client;
     engine.rootContext()->setContextProperty("client", &client);
     engine.load(url);

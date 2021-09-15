@@ -21,7 +21,7 @@ class ChatServer : public QTcpServer
 signals:
 	void logMessage(const QString& mess);
 public:
-	void incomingConnection(std::int64_t  socketDescriptor) override;
+    void incomingConnection(std::int64_t  socketDescriptor);
 	void RegistrationNotification(Client* destination, ServerRegistrationNotification& message, int interval);
 	void LoginInNotification(Client* destination, ServerLogInNotification& message, int interval);
 	bool Regestration(Client* client, const UserInformation& userInfo);

@@ -6,12 +6,13 @@ TEMPLATE = app
 TARGET = Server
 DESTDIR = ./x64/Debug
 CONFIG += debug console
-LIBS += -L"../../../../../../../../install/lib" \
-    -L"../../../../../../../../protobuf-3.17.3/Debug" \
-    -llibprotobuf
+QT += network
+LIBS += -lprotobuf
 DEPENDPATH += .
 MOC_DIR += .
-OBJECTS_DIR += debug
 UI_DIR += .
 RCC_DIR += .
 include(Server.pri)
+
+SUBDIRS += \
+    ../Client/Client.pro

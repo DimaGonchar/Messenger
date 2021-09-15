@@ -1,7 +1,11 @@
 <RCC>
     <qresource prefix="/">
-        <file>telegram1.qml</file>
         <file>main.qml</file>
         <file>SimplePage.qml</file>
+        <file>Albert Einstein.png</file>
+        <file>Ernest Hemingway.png</file>
+        <file>Hans Gude.png</file>
+        <file>RegestrationPage.qml</file>
+        <file>TitlePage.qml</file>
     </qresource>
 </RCC>

@@ -7,7 +7,6 @@ Page {
     id: root
     property alias backgroundColor: backgroundRect.color
     property alias buttonText: navButton.text
-    signal buttonClicked();
 
     background: Rectangle {
         id: backgroundRect
@@ -19,8 +18,5 @@ Page {
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         anchors.margins: defMargin
-        onClicked: {
-            root.buttonClicked();
-        }
     }
 }

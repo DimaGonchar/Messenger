@@ -8,6 +8,7 @@ CONFIG += c++11
 
 SOURCES += \
         Client.pb.cc \
+        NotificationTupeMoc.pb.cc \
         Server.pb.cc \
         TpClient.cpp \
         main.cpp
@@ -27,12 +28,16 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     Client.pb.h \
+    NotificationTupeMoc.pb.h \
+    NotificationType.hpp \
     Server.pb.h \
     TcpClient.hpp \
 
 LIBS += -lprotobuf
 DISTFILES += \
-    Client.proto
+    Client.proto \
+    NotificationTupeMoc.proto \
+    Server.proto
 
 SUBDIRS += \
     ../../123/123.pro \

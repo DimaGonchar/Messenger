@@ -1,4 +1,5 @@
 #include "TcpClient.hpp"
+#include "NotificationType.hpp"
 #include <QDebug>
 #include <memory>
 
@@ -37,42 +38,48 @@ void TcpClient::login(const QString& userLogin, const QString& userPass)
 
 void TcpClient::SendLoginIn(const std::string& login, const std::string& pass)
 {
-        m_client.set_login(login);
-        m_client.set_pass(pass);
-        m_client.set_request(ProtoClient_Request_AUTHORIZE_USER);
-        m_requestForServer.resize(m_client.ByteSizeLong());
-        m_client.SerializeToArray(static_cast<void*>(&m_requestForServer[0]), m_requestForServer.size());
+        qInfo()<<"sended sign in";
+        ClientSignInNotification signInNotification;
+        signInNotification.set_login(login);
+        signInNotification.set_pass(pass);
+        signInNotification.set_typenotification(NotificationType::SignIn);
+        m_requestForServer.resize(signInNotification.ByteSizeLong());
+        signInNotification.SerializeToArray(static_cast<void*>(&m_requestForServer[0]), m_requestForServer.size());
         m_socket->write(static_cast<QByteArray>(&m_requestForServer[0]),m_requestForServer.size());
 }
-void TcpClient::registration(const QString& login, const QString& pass)
+void TcpClient::regestration(const QString& userLogin, const QString& userPass, const QString& userName)
 {
-    if(login.isEmpty())
+    if(userLogin.isEmpty())
     {
         emit newMessage("empty login!");
     }
-    if(pass.isEmpty())
+    if(userPass.isEmpty())
     {
         emit newMessage("empty password!");
     }
-    else if(!login.isEmpty()&&!pass.isEmpty())
+    else if(!userLogin.isEmpty()&&!userPass.isEmpty())
     {
-      RegistrationUser(login.toStdString(),pass.toStdString());
+      RegestrationUser(userLogin.toStdString(),userPass.toStdString(), userName.toStdString());
     }
 }
-void TcpClient::RegistrationUser(const std::string& login, const std::string& pass)
+void TcpClient::RegestrationUser(const std::string& login, const std::string& pass, const std::string& name)
 {
-    m_client.set_login(login);
-    m_client.set_pass(pass);
-    m_client.set_request(ProtoClient_Request_REGISTER_USER);
-     m_requestForServer.resize(m_client.ByteSizeLong());
-    m_client.SerializeToArray(static_cast<void*>(&m_requestForServer[0]), m_requestForServer.size());
+    qInfo()<<"sended sign up";
+    ClientRegistrationNotification regNotification;
+    regNotification.set_typenotification(NotificationType::Registration);
+    regNotification.set_login(login);
+    regNotification.set_username(name);
+    regNotification.set_pass(pass);
+    m_requestForServer.resize(regNotification.ByteSizeLong());
+    regNotification.SerializeToArray(static_cast<void*>(&m_requestForServer[0]), m_requestForServer.size());
     m_socket->write(static_cast<QByteArray>(&m_requestForServer[0]),m_requestForServer.size());
 }
 void TcpClient::sendMessage(const QString& message)
 {
-    m_client.set_usermessage(message.toStdString());
-    m_client.set_request(ProtoClient_Request_SEND_MESSAGE);
-    m_client.SerializeToArray(static_cast<void*>(&m_requestForServer[0]), m_requestForServer.size());
+    m_sendMess.set_typenotification(NotificationType::Message);
+    m_sendMess.set_text(message.toStdString());
+    m_requestForServer.resize(m_sendMess.ByteSizeLong());
+    m_sendMess.SerializeToArray(static_cast<void*>(&m_requestForServer[0]), m_requestForServer.size());
     m_socket->write(static_cast<QByteArray>(&m_requestForServer[0]),m_requestForServer.size());
 }
 
@@ -85,39 +92,50 @@ void TcpClient::onReadyRead()
 {
     m_dataFromServer.append(m_socket->readAll());
     qInfo()<<m_dataFromServer;
-    ProtoServer server;
-    if(server.ParseFromArray(m_dataFromServer, m_dataFromServer.size()))
-    {
-        if(server.responce()==ProtoServer_Response_USER_EXISTS)
-        {
-            emit newMessage("user exists!");
-        }
-        if(server.responce()==ProtoServer::Response::ProtoServer_Response_REGISTRATION_IS_SUCCESFUL)
-        {
-           qInfo()<<"succesful";
-           emit newMessage("registered!");
-        }
-        if(server.responce()==ProtoServer_Response_AUTHORIZATION_IS_SUCCESFUL)
-        {
-            qInfo()<<"succesful";
-            emit logIn();
-        }
-        if(server.responce()==ProtoServer_Response_NO_CORRECT_LOGIN)
-        {
-            qInfo()<<"no correct login";
-            emit newMessage("no correct login");
-         }
-        if(server.responce()==ProtoServer_Response_NO_CORRECT_PASS)
-        {
-            qInfo()<<"no correct password";
-            emit newMessage("no correct password");
-        }
+    NotificationTupeMoc m_tMoc;
+    m_tMoc.ParseFromArray(m_dataFromServer, m_dataFromServer.size());
+    const auto type= static_cast<NotificationType>(m_tMoc.typenotification());
 
-        if(server.responce()==ProtoServer_Response_USER_NOT_FOUND)
+    if(type==NotificationType::Registration)
+    {
+
+        qInfo()<<"regestration";
+        m_regNotif.ParseFromArray(m_dataFromServer, m_dataFromServer.size());
+        if(m_regNotif.response()==ServerRegistrationNotification_Response_USER_EXISTS)
+        {
+            qInfo()<<"user exists!";
+            emit errorMessage("user already exists!");
+            return;
+        }
+            qInfo()<<"succesful";
+            emit signUp();
+    }
+
+    if(type==NotificationType::SignIn)
+    {
+        qInfo()<<"sign in";
+        m_signInNotif.ParseFromArray(m_dataFromServer, m_dataFromServer.size());
+        if(m_signInNotif.respose()==ServerLogInNotification_Response_USER_NOT_FOUND)
         {
             qInfo()<<"user not founded";
-            emit newMessage("user not founded");
+            emit errorMessage("user not founded");
+            return;
         }
+        if(m_signInNotif.respose()==ServerLogInNotification_Response_AUTHORIZATION_FAILD)
+        {
+            qInfo()<<"no correct login or password";
+            emit errorMessage("no correct login or password");
+            return;
+        }
+            qInfo()<<"succesful";
+            emit logIn();
+    }
+    if(type==NotificationType::NewUserConnect)
+    {
+        NewUserConnectNotification user;
+        user.ParseFromArray(m_dataFromServer, m_dataFromServer.size());
+        qInfo()<<"new user";
+        emit newUser("user");
     }
    m_dataFromServer.clear();
 }
