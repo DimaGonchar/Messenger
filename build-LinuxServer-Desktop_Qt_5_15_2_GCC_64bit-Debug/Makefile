@@ -62,7 +62,6 @@ SOURCES       = ../LinuxServer/ChatServer.cpp \
 		../LinuxServer/UserInformation.cpp \
 		../LinuxServer/main.cpp moc_ChatServer.cpp \
 		moc_Client.cpp \
-		moc_Database.cpp \
 		moc_Server.cpp
 OBJECTS       = ChatServer.o \
 		Client.o \
@@ -75,7 +74,6 @@ OBJECTS       = ChatServer.o \
 		main.o \
 		moc_ChatServer.o \
 		moc_Client.o \
-		moc_Database.o \
 		moc_Server.o
 DIST          = ../LinuxServer/Client.proto \
 		../LinuxServer/NotificationTupeMoc.proto \
@@ -732,9 +730,9 @@ compiler_moc_predefs_clean:
 moc_predefs.h: ../../../Qt/5.15.2/gcc_64/mkspecs/features/data/dummy.cpp
 	g++ -pipe -g -std=gnu++1z -Wall -Wextra -dM -E -o moc_predefs.h ../../../Qt/5.15.2/gcc_64/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_ChatServer.cpp moc_Client.cpp moc_Database.cpp moc_Server.cpp
+compiler_moc_header_make_all: moc_ChatServer.cpp moc_Client.cpp moc_Server.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_ChatServer.cpp moc_Client.cpp moc_Database.cpp moc_Server.cpp
+	-$(DEL_FILE) moc_ChatServer.cpp moc_Client.cpp moc_Server.cpp
 moc_ChatServer.cpp: ../LinuxServer/ChatServer.h \
 		../../../Qt/5.15.2/gcc_64/include/QtNetwork/QTcpServer \
 		../../../Qt/5.15.2/gcc_64/include/QtNetwork/qtcpserver.h \
@@ -816,6 +814,17 @@ moc_ChatServer.cpp: ../LinuxServer/ChatServer.h \
 		../LinuxServer/UserInformation.h \
 		../LinuxServer/Server.pb.h \
 		../LinuxServer/Client.pb.h \
+		../LinuxServer/Database.h \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/QSqlDatabase \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/qsqldatabase.h \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/qtsqlglobal.h \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/qtsql-config.h \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/QSqlError \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/qsqlerror.h \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/QSqlQuery \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/qsqlquery.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/QDebug \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/QVariant \
 		moc_predefs.h \
 		../../../Qt/5.15.2/gcc_64/bin/moc
 	/home/dima/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/dima/Documents/Messenger/build-LinuxServer-Desktop_Qt_5_15_2_GCC_64bit-Debug/moc_predefs.h -I/home/dima/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/dima/Documents/Messenger/LinuxServer -I/home/dima/Qt/5.15.2/gcc_64/include -I/home/dima/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/dima/Qt/5.15.2/gcc_64/include/QtSql -I/home/dima/Qt/5.15.2/gcc_64/include/QtCore -I. -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../LinuxServer/ChatServer.h -o moc_ChatServer.cpp
@@ -900,93 +909,6 @@ moc_Client.cpp: ../LinuxServer/Client.h \
 		../../../Qt/5.15.2/gcc_64/bin/moc
 	/home/dima/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/dima/Documents/Messenger/build-LinuxServer-Desktop_Qt_5_15_2_GCC_64bit-Debug/moc_predefs.h -I/home/dima/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/dima/Documents/Messenger/LinuxServer -I/home/dima/Qt/5.15.2/gcc_64/include -I/home/dima/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/dima/Qt/5.15.2/gcc_64/include/QtSql -I/home/dima/Qt/5.15.2/gcc_64/include/QtCore -I. -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../LinuxServer/Client.h -o moc_Client.cpp
 
-moc_Database.cpp: ../LinuxServer/Database.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/QObject \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qobject.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qobjectdefs.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qnamespace.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qglobal.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qconfig-bootstrapped.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qconfig.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qtcore-config.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qsystemdetection.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qprocessordetection.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qcompilerdetection.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qtypeinfo.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qsysinfo.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qlogging.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qflags.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qatomic.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qbasicatomic.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qatomic_bootstrap.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qgenericatomic.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qatomic_cxx11.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qatomic_msvc.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qglobalstatic.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qmutex.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qnumeric.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qversiontagging.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qobjectdefs_impl.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qstring.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qchar.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qbytearray.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qrefcount.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qarraydata.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qstringliteral.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qstringalgorithms.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qstringview.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qstringbuilder.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qlist.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qalgorithms.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qiterator.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qhashfunctions.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qpair.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qvector.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qcontainertools_impl.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qpoint.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qbytearraylist.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qstringlist.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qregexp.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qstringmatcher.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qcoreevent.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qscopedpointer.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qmetatype.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qvarlengtharray.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qcontainerfwd.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qobject_impl.h \
-		../../../Qt/5.15.2/gcc_64/include/QtSql/QSqlDatabase \
-		../../../Qt/5.15.2/gcc_64/include/QtSql/qsqldatabase.h \
-		../../../Qt/5.15.2/gcc_64/include/QtSql/qtsqlglobal.h \
-		../../../Qt/5.15.2/gcc_64/include/QtSql/qtsql-config.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/QDir \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qdir.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qfileinfo.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qfile.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qfiledevice.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qiodevice.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qshareddata.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qhash.h \
-		../../../Qt/5.15.2/gcc_64/include/QtSql/QSqlError \
-		../../../Qt/5.15.2/gcc_64/include/QtSql/qsqlerror.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/QStandardPaths \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qstandardpaths.h \
-		../../../Qt/5.15.2/gcc_64/include/QtSql/QSqlQuery \
-		../../../Qt/5.15.2/gcc_64/include/QtSql/qsqlquery.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/QDebug \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qdebug.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qmap.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qtextstream.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qlocale.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qvariant.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qset.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qcontiguouscache.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qsharedpointer.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qsharedpointer_impl.h \
-		../LinuxServer/UserInformation.h \
-		moc_predefs.h \
-		../../../Qt/5.15.2/gcc_64/bin/moc
-	/home/dima/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/dima/Documents/Messenger/build-LinuxServer-Desktop_Qt_5_15_2_GCC_64bit-Debug/moc_predefs.h -I/home/dima/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/dima/Documents/Messenger/LinuxServer -I/home/dima/Qt/5.15.2/gcc_64/include -I/home/dima/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/dima/Qt/5.15.2/gcc_64/include/QtSql -I/home/dima/Qt/5.15.2/gcc_64/include/QtCore -I. -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../LinuxServer/Database.h -o moc_Database.cpp
-
 moc_Server.cpp: ../LinuxServer/Server.h \
 		../../../Qt/5.15.2/gcc_64/include/QtNetwork/QTcpServer \
 		../../../Qt/5.15.2/gcc_64/include/QtNetwork/qtcpserver.h \
@@ -1069,6 +991,17 @@ moc_Server.cpp: ../LinuxServer/Server.h \
 		../LinuxServer/UserInformation.h \
 		../LinuxServer/Server.pb.h \
 		../LinuxServer/Client.pb.h \
+		../LinuxServer/Database.h \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/QSqlDatabase \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/qsqldatabase.h \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/qtsqlglobal.h \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/qtsql-config.h \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/QSqlError \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/qsqlerror.h \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/QSqlQuery \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/qsqlquery.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/QDebug \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/QVariant \
 		moc_predefs.h \
 		../../../Qt/5.15.2/gcc_64/bin/moc
 	/home/dima/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/dima/Documents/Messenger/build-LinuxServer-Desktop_Qt_5_15_2_GCC_64bit-Debug/moc_predefs.h -I/home/dima/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/dima/Documents/Messenger/LinuxServer -I/home/dima/Qt/5.15.2/gcc_64/include -I/home/dima/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/dima/Qt/5.15.2/gcc_64/include/QtSql -I/home/dima/Qt/5.15.2/gcc_64/include/QtCore -I. -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../LinuxServer/Server.h -o moc_Server.cpp
@@ -1168,6 +1101,17 @@ ChatServer.o: ../LinuxServer/ChatServer.cpp ../LinuxServer/ChatServer.h \
 		../LinuxServer/UserInformation.h \
 		../LinuxServer/Server.pb.h \
 		../LinuxServer/Client.pb.h \
+		../LinuxServer/Database.h \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/QSqlDatabase \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/qsqldatabase.h \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/qtsqlglobal.h \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/qtsql-config.h \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/QSqlError \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/qsqlerror.h \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/QSqlQuery \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/qsqlquery.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/QDebug \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/QVariant \
 		../LinuxServer/Client.h \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/QObject \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/QReadWriteLock \
@@ -1262,10 +1206,9 @@ Client.pb.o: ../LinuxServer/Client.pb.cc ../LinuxServer/Client.pb.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Client.pb.o ../LinuxServer/Client.pb.cc
 
 Database.o: ../LinuxServer/Database.cpp ../LinuxServer/Database.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/QObject \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qobject.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qobjectdefs.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qnamespace.h \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/QSqlDatabase \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/qsqldatabase.h \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/qtsqlglobal.h \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/qglobal.h \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/qconfig-bootstrapped.h \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/qconfig.h \
@@ -1287,19 +1230,27 @@ Database.o: ../LinuxServer/Database.cpp ../LinuxServer/Database.h \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/qmutex.h \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/qnumeric.h \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/qversiontagging.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/qtsql-config.h \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/qstring.h \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/qchar.h \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/qbytearray.h \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/qrefcount.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qnamespace.h \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/qarraydata.h \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/qstringliteral.h \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/qstringalgorithms.h \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/qstringview.h \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/qstringbuilder.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qlist.h \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/QSqlError \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/qsqlerror.h \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/QSqlQuery \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/qsqlquery.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/QDebug \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qdebug.h \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/qalgorithms.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qhash.h \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/qiterator.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qlist.h \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/qhashfunctions.h \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/qpair.h \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/qvector.h \
@@ -1309,41 +1260,28 @@ Database.o: ../LinuxServer/Database.cpp ../LinuxServer/Database.h \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/qstringlist.h \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/qregexp.h \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/qstringmatcher.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qmap.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qtextstream.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qiodevice.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qobject.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qobjectdefs.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qobjectdefs_impl.h \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/qcoreevent.h \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/qscopedpointer.h \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/qmetatype.h \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/qvarlengtharray.h \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/qcontainerfwd.h \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/qobject_impl.h \
-		../../../Qt/5.15.2/gcc_64/include/QtSql/QSqlDatabase \
-		../../../Qt/5.15.2/gcc_64/include/QtSql/qsqldatabase.h \
-		../../../Qt/5.15.2/gcc_64/include/QtSql/qtsqlglobal.h \
-		../../../Qt/5.15.2/gcc_64/include/QtSql/qtsql-config.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/QDir \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qdir.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qfileinfo.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qfile.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qfiledevice.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qiodevice.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qshareddata.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qhash.h \
-		../../../Qt/5.15.2/gcc_64/include/QtSql/QSqlError \
-		../../../Qt/5.15.2/gcc_64/include/QtSql/qsqlerror.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/QStandardPaths \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qstandardpaths.h \
-		../../../Qt/5.15.2/gcc_64/include/QtSql/QSqlQuery \
-		../../../Qt/5.15.2/gcc_64/include/QtSql/qsqlquery.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/QDebug \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qdebug.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qmap.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qtextstream.h \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/qlocale.h \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/qvariant.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qshareddata.h \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/qset.h \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/qcontiguouscache.h \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/qsharedpointer.h \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/qsharedpointer_impl.h \
-		../LinuxServer/UserInformation.h
+		../../../Qt/5.15.2/gcc_64/include/QtCore/QVariant \
+		../LinuxServer/UserInformation.h \
+		../LinuxServer/Server.pb.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Database.o ../LinuxServer/Database.cpp
 
 NotificationTupeMoc.pb.o: ../LinuxServer/NotificationTupeMoc.pb.cc ../LinuxServer/NotificationTupeMoc.pb.h
@@ -1430,7 +1368,18 @@ Server.o: ../LinuxServer/Server.cpp ../LinuxServer/Server.h \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/QVector \
 		../LinuxServer/UserInformation.h \
 		../LinuxServer/Server.pb.h \
-		../LinuxServer/Client.pb.h
+		../LinuxServer/Client.pb.h \
+		../LinuxServer/Database.h \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/QSqlDatabase \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/qsqldatabase.h \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/qtsqlglobal.h \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/qtsql-config.h \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/QSqlError \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/qsqlerror.h \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/QSqlQuery \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/qsqlquery.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/QDebug \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/QVariant
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Server.o ../LinuxServer/Server.cpp
 
 Server.pb.o: ../LinuxServer/Server.pb.cc ../LinuxServer/Server.pb.h
@@ -1524,21 +1473,17 @@ main.o: ../LinuxServer/main.cpp ../../../Qt/5.15.2/gcc_64/include/QtCore/QCoreAp
 		../LinuxServer/UserInformation.h \
 		../LinuxServer/Server.pb.h \
 		../LinuxServer/Client.pb.h \
+		../LinuxServer/Database.h \
 		../../../Qt/5.15.2/gcc_64/include/QtSql/QSqlDatabase \
 		../../../Qt/5.15.2/gcc_64/include/QtSql/qsqldatabase.h \
 		../../../Qt/5.15.2/gcc_64/include/QtSql/qtsqlglobal.h \
 		../../../Qt/5.15.2/gcc_64/include/QtSql/qtsql-config.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/QDir \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qdir.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qfileinfo.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qfile.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qfiledevice.h \
 		../../../Qt/5.15.2/gcc_64/include/QtSql/QSqlError \
 		../../../Qt/5.15.2/gcc_64/include/QtSql/qsqlerror.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/QStandardPaths \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qstandardpaths.h \
 		../../../Qt/5.15.2/gcc_64/include/QtSql/QSqlQuery \
-		../../../Qt/5.15.2/gcc_64/include/QtSql/qsqlquery.h
+		../../../Qt/5.15.2/gcc_64/include/QtSql/qsqlquery.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/QDebug \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/QVariant
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../LinuxServer/main.cpp
 
 moc_ChatServer.o: moc_ChatServer.cpp 
@@ -1546,9 +1491,6 @@ moc_ChatServer.o: moc_ChatServer.cpp
 
 moc_Client.o: moc_Client.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_Client.o moc_Client.cpp
-
-moc_Database.o: moc_Database.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_Database.o moc_Database.cpp
 
 moc_Server.o: moc_Server.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_Server.o moc_Server.cpp

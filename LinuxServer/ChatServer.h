@@ -22,7 +22,6 @@ class ChatServer : public QTcpServer
 signals:
 	void logMessage(const QString& mess);
 public:
-    //void connectToDatabase();
     virtual void incomingConnection(std::int64_t  socketDescriptor);
 	void RegistrationNotification(Client* destination, ServerRegistrationNotification& message, int interval);
 	void LoginInNotification(Client* destination, ServerLogInNotification& message, int interval);

@@ -47,11 +47,11 @@ struct TableStruct_Server_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxiliaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[4]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[5]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
-  static const ::PROTOBUF_NAMESPACE_ID::uint32 offsets[];
+  static const uint32_t offsets[];
 };
 extern const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_Server_2eproto;
 class NewUserConnectNotification;
@@ -66,19 +66,23 @@ extern ServerMessageNotificationDefaultTypeInternal _ServerMessageNotification_d
 class ServerRegistrationNotification;
 struct ServerRegistrationNotificationDefaultTypeInternal;
 extern ServerRegistrationNotificationDefaultTypeInternal _ServerRegistrationNotification_default_instance_;
+class User;
+struct UserDefaultTypeInternal;
+extern UserDefaultTypeInternal _User_default_instance_;
 PROTOBUF_NAMESPACE_OPEN
 template<> ::NewUserConnectNotification* Arena::CreateMaybeMessage<::NewUserConnectNotification>(Arena*);
 template<> ::ServerLogInNotification* Arena::CreateMaybeMessage<::ServerLogInNotification>(Arena*);
 template<> ::ServerMessageNotification* Arena::CreateMaybeMessage<::ServerMessageNotification>(Arena*);
 template<> ::ServerRegistrationNotification* Arena::CreateMaybeMessage<::ServerRegistrationNotification>(Arena*);
+template<> ::User* Arena::CreateMaybeMessage<::User>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 
 enum ServerLogInNotification_Response : int {
   ServerLogInNotification_Response_AUTHORIZATION_IS_SUCCESFUL = 0,
   ServerLogInNotification_Response_AUTHORIZATION_FAILD = 1,
   ServerLogInNotification_Response_USER_NOT_FOUND = 2,
-  ServerLogInNotification_Response_ServerLogInNotification_Response_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
-  ServerLogInNotification_Response_ServerLogInNotification_Response_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
+  ServerLogInNotification_Response_ServerLogInNotification_Response_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
+  ServerLogInNotification_Response_ServerLogInNotification_Response_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
 };
 bool ServerLogInNotification_Response_IsValid(int value);
 constexpr ServerLogInNotification_Response ServerLogInNotification_Response_Response_MIN = ServerLogInNotification_Response_AUTHORIZATION_IS_SUCCESFUL;
@@ -102,8 +106,8 @@ inline bool ServerLogInNotification_Response_Parse(
 enum ServerRegistrationNotification_Response : int {
   ServerRegistrationNotification_Response_REGISTRATION_IS_SUCCESFUL = 0,
   ServerRegistrationNotification_Response_USER_EXISTS = 1,
-  ServerRegistrationNotification_Response_ServerRegistrationNotification_Response_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
-  ServerRegistrationNotification_Response_ServerRegistrationNotification_Response_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
+  ServerRegistrationNotification_Response_ServerRegistrationNotification_Response_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
+  ServerRegistrationNotification_Response_ServerRegistrationNotification_Response_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
 };
 bool ServerRegistrationNotification_Response_IsValid(int value);
 constexpr ServerRegistrationNotification_Response ServerRegistrationNotification_Response_Response_MIN = ServerRegistrationNotification_Response_REGISTRATION_IS_SUCCESFUL;
@@ -145,7 +149,11 @@ class ServerLogInNotification final :
   }
   inline ServerLogInNotification& operator=(ServerLogInNotification&& from) noexcept {
     if (this == &from) return *this;
-    if (GetOwningArena() == from.GetOwningArena()) {
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
       InternalSwap(&from);
     } else {
       CopyFrom(from);
@@ -177,7 +185,12 @@ class ServerLogInNotification final :
   }
   inline void Swap(ServerLogInNotification* other) {
     if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
     if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
       InternalSwap(other);
     } else {
       ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
@@ -203,15 +216,15 @@ class ServerLogInNotification final :
   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
   void MergeFrom(const ServerLogInNotification& from);
   private:
-  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message*to, const ::PROTOBUF_NAMESPACE_ID::Message&from);
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
   public:
   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
   bool IsInitialized() const final;
 
   size_t ByteSizeLong() const final;
   const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
-  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
-      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
   int GetCachedSize() const final { return _cached_size_.Get(); }
 
   private:
@@ -273,13 +286,32 @@ class ServerLogInNotification final :
   // accessors -------------------------------------------------------
 
   enum : int {
+    kUsersFieldNumber = 7,
     kUserLoginFieldNumber = 2,
     kUserPassFieldNumber = 3,
     kTypeNotificationFieldNumber = 1,
-    kResposeFieldNumber = 6,
     kSesionIdFieldNumber = 4,
     kUserIdFieldNumber = 5,
+    kResposeFieldNumber = 6,
   };
+  // repeated .User users = 7;
+  int users_size() const;
+  private:
+  int _internal_users_size() const;
+  public:
+  void clear_users();
+  ::User* mutable_users(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::User >*
+      mutable_users();
+  private:
+  const ::User& _internal_users(int index) const;
+  ::User* _internal_add_users();
+  public:
+  const ::User& users(int index) const;
+  ::User* add_users();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::User >&
+      users() const;
+
   // string userLogin = 2;
   void clear_userlogin();
   const std::string& userlogin() const;
@@ -310,11 +342,29 @@ class ServerLogInNotification final :
 
   // uint32 typeNotification = 1;
   void clear_typenotification();
-  ::PROTOBUF_NAMESPACE_ID::uint32 typenotification() const;
-  void set_typenotification(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  uint32_t typenotification() const;
+  void set_typenotification(uint32_t value);
   private:
-  ::PROTOBUF_NAMESPACE_ID::uint32 _internal_typenotification() const;
-  void _internal_set_typenotification(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  uint32_t _internal_typenotification() const;
+  void _internal_set_typenotification(uint32_t value);
+  public:
+
+  // uint32 sesionId = 4;
+  void clear_sesionid();
+  uint32_t sesionid() const;
+  void set_sesionid(uint32_t value);
+  private:
+  uint32_t _internal_sesionid() const;
+  void _internal_set_sesionid(uint32_t value);
+  public:
+
+  // uint32 userId = 5;
+  void clear_userid();
+  uint32_t userid() const;
+  void set_userid(uint32_t value);
+  private:
+  uint32_t _internal_userid() const;
+  void _internal_set_userid(uint32_t value);
   public:
 
   // optional .ServerLogInNotification.Response respose = 6;
@@ -330,24 +380,6 @@ class ServerLogInNotification final :
   void _internal_set_respose(::ServerLogInNotification_Response value);
   public:
 
-  // uint64 sesionId = 4;
-  void clear_sesionid();
-  ::PROTOBUF_NAMESPACE_ID::uint64 sesionid() const;
-  void set_sesionid(::PROTOBUF_NAMESPACE_ID::uint64 value);
-  private:
-  ::PROTOBUF_NAMESPACE_ID::uint64 _internal_sesionid() const;
-  void _internal_set_sesionid(::PROTOBUF_NAMESPACE_ID::uint64 value);
-  public:
-
-  // uint64 userId = 5;
-  void clear_userid();
-  ::PROTOBUF_NAMESPACE_ID::uint64 userid() const;
-  void set_userid(::PROTOBUF_NAMESPACE_ID::uint64 value);
-  private:
-  ::PROTOBUF_NAMESPACE_ID::uint64 _internal_userid() const;
-  void _internal_set_userid(::PROTOBUF_NAMESPACE_ID::uint64 value);
-  public:
-
   // @@protoc_insertion_point(class_scope:ServerLogInNotification)
  private:
   class _Internal;
@@ -357,12 +389,13 @@ class ServerLogInNotification final :
   typedef void DestructorSkippable_;
   ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::User > users_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr userlogin_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr userpass_;
-  ::PROTOBUF_NAMESPACE_ID::uint32 typenotification_;
+  uint32_t typenotification_;
+  uint32_t sesionid_;
+  uint32_t userid_;
   int respose_;
-  ::PROTOBUF_NAMESPACE_ID::uint64 sesionid_;
-  ::PROTOBUF_NAMESPACE_ID::uint64 userid_;
   friend struct ::TableStruct_Server_2eproto;
 };
 // -------------------------------------------------------------------
@@ -386,7 +419,11 @@ class ServerRegistrationNotification final :
   }
   inline ServerRegistrationNotification& operator=(ServerRegistrationNotification&& from) noexcept {
     if (this == &from) return *this;
-    if (GetOwningArena() == from.GetOwningArena()) {
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
       InternalSwap(&from);
     } else {
       CopyFrom(from);
@@ -418,7 +455,12 @@ class ServerRegistrationNotification final :
   }
   inline void Swap(ServerRegistrationNotification* other) {
     if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
     if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
       InternalSwap(other);
     } else {
       ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
@@ -444,15 +486,15 @@ class ServerRegistrationNotification final :
   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
   void MergeFrom(const ServerRegistrationNotification& from);
   private:
-  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message*to, const ::PROTOBUF_NAMESPACE_ID::Message&from);
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
   public:
   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
   bool IsInitialized() const final;
 
   size_t ByteSizeLong() const final;
   const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
-  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
-      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
   int GetCachedSize() const final { return _cached_size_.Get(); }
 
   private:
@@ -512,27 +554,36 @@ class ServerRegistrationNotification final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kUserIdFieldNumber = 2,
     kTypeNotificationFieldNumber = 1,
-    kResponseFieldNumber = 4,
+    kUserIdFieldNumber = 2,
     kSesionIdFieldNumber = 3,
+    kResponseFieldNumber = 4,
   };
-  // uint64 userId = 2;
-  void clear_userid();
-  ::PROTOBUF_NAMESPACE_ID::uint64 userid() const;
-  void set_userid(::PROTOBUF_NAMESPACE_ID::uint64 value);
-  private:
-  ::PROTOBUF_NAMESPACE_ID::uint64 _internal_userid() const;
-  void _internal_set_userid(::PROTOBUF_NAMESPACE_ID::uint64 value);
-  public:
-
   // uint32 typeNotification = 1;
   void clear_typenotification();
-  ::PROTOBUF_NAMESPACE_ID::uint32 typenotification() const;
-  void set_typenotification(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  uint32_t typenotification() const;
+  void set_typenotification(uint32_t value);
   private:
-  ::PROTOBUF_NAMESPACE_ID::uint32 _internal_typenotification() const;
-  void _internal_set_typenotification(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  uint32_t _internal_typenotification() const;
+  void _internal_set_typenotification(uint32_t value);
+  public:
+
+  // uint32 userId = 2;
+  void clear_userid();
+  uint32_t userid() const;
+  void set_userid(uint32_t value);
+  private:
+  uint32_t _internal_userid() const;
+  void _internal_set_userid(uint32_t value);
+  public:
+
+  // uint64 sesionId = 3;
+  void clear_sesionid();
+  uint64_t sesionid() const;
+  void set_sesionid(uint64_t value);
+  private:
+  uint64_t _internal_sesionid() const;
+  void _internal_set_sesionid(uint64_t value);
   public:
 
   // optional .ServerRegistrationNotification.Response response = 4;
@@ -548,15 +599,6 @@ class ServerRegistrationNotification final :
   void _internal_set_response(::ServerRegistrationNotification_Response value);
   public:
 
-  // uint64 sesionId = 3;
-  void clear_sesionid();
-  ::PROTOBUF_NAMESPACE_ID::uint64 sesionid() const;
-  void set_sesionid(::PROTOBUF_NAMESPACE_ID::uint64 value);
-  private:
-  ::PROTOBUF_NAMESPACE_ID::uint64 _internal_sesionid() const;
-  void _internal_set_sesionid(::PROTOBUF_NAMESPACE_ID::uint64 value);
-  public:
-
   // @@protoc_insertion_point(class_scope:ServerRegistrationNotification)
  private:
   class _Internal;
@@ -566,10 +608,10 @@ class ServerRegistrationNotification final :
   typedef void DestructorSkippable_;
   ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-  ::PROTOBUF_NAMESPACE_ID::uint64 userid_;
-  ::PROTOBUF_NAMESPACE_ID::uint32 typenotification_;
+  uint32_t typenotification_;
+  uint32_t userid_;
+  uint64_t sesionid_;
   int response_;
-  ::PROTOBUF_NAMESPACE_ID::uint64 sesionid_;
   friend struct ::TableStruct_Server_2eproto;
 };
 // -------------------------------------------------------------------
@@ -593,7 +635,11 @@ class ServerMessageNotification final :
   }
   inline ServerMessageNotification& operator=(ServerMessageNotification&& from) noexcept {
     if (this == &from) return *this;
-    if (GetOwningArena() == from.GetOwningArena()) {
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
       InternalSwap(&from);
     } else {
       CopyFrom(from);
@@ -625,7 +671,12 @@ class ServerMessageNotification final :
   }
   inline void Swap(ServerMessageNotification* other) {
     if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
     if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
       InternalSwap(other);
     } else {
       ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
@@ -651,15 +702,15 @@ class ServerMessageNotification final :
   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
   void MergeFrom(const ServerMessageNotification& from);
   private:
-  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message*to, const ::PROTOBUF_NAMESPACE_ID::Message&from);
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
   public:
   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
   bool IsInitialized() const final;
 
   size_t ByteSizeLong() const final;
   const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
-  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
-      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
   int GetCachedSize() const final { return _cached_size_.Get(); }
 
   private:
@@ -690,8 +741,9 @@ class ServerMessageNotification final :
 
   enum : int {
     kUserNameFieldNumber = 2,
-    kTextFieldNumber = 4,
-    kSenderIdFieldNumber = 3,
+    kRecipientLoginFieldNumber = 3,
+    kRecipientNameFieldNumber = 4,
+    kTextFieldNumber = 5,
     kTypeNotificationFieldNumber = 1,
   };
   // string userName = 2;
@@ -708,7 +760,35 @@ class ServerMessageNotification final :
   std::string* _internal_mutable_username();
   public:
 
-  // string text = 4;
+  // string recipientLogin = 3;
+  void clear_recipientlogin();
+  const std::string& recipientlogin() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_recipientlogin(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_recipientlogin();
+  PROTOBUF_MUST_USE_RESULT std::string* release_recipientlogin();
+  void set_allocated_recipientlogin(std::string* recipientlogin);
+  private:
+  const std::string& _internal_recipientlogin() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_recipientlogin(const std::string& value);
+  std::string* _internal_mutable_recipientlogin();
+  public:
+
+  // string recipientName = 4;
+  void clear_recipientname();
+  const std::string& recipientname() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_recipientname(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_recipientname();
+  PROTOBUF_MUST_USE_RESULT std::string* release_recipientname();
+  void set_allocated_recipientname(std::string* recipientname);
+  private:
+  const std::string& _internal_recipientname() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_recipientname(const std::string& value);
+  std::string* _internal_mutable_recipientname();
+  public:
+
+  // string text = 5;
   void clear_text();
   const std::string& text() const;
   template <typename ArgT0 = const std::string&, typename... ArgT>
@@ -722,22 +802,13 @@ class ServerMessageNotification final :
   std::string* _internal_mutable_text();
   public:
 
-  // uint64 senderId = 3;
-  void clear_senderid();
-  ::PROTOBUF_NAMESPACE_ID::uint64 senderid() const;
-  void set_senderid(::PROTOBUF_NAMESPACE_ID::uint64 value);
-  private:
-  ::PROTOBUF_NAMESPACE_ID::uint64 _internal_senderid() const;
-  void _internal_set_senderid(::PROTOBUF_NAMESPACE_ID::uint64 value);
-  public:
-
   // uint32 typeNotification = 1;
   void clear_typenotification();
-  ::PROTOBUF_NAMESPACE_ID::uint32 typenotification() const;
-  void set_typenotification(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  uint32_t typenotification() const;
+  void set_typenotification(uint32_t value);
   private:
-  ::PROTOBUF_NAMESPACE_ID::uint32 _internal_typenotification() const;
-  void _internal_set_typenotification(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  uint32_t _internal_typenotification() const;
+  void _internal_set_typenotification(uint32_t value);
   public:
 
   // @@protoc_insertion_point(class_scope:ServerMessageNotification)
@@ -748,9 +819,163 @@ class ServerMessageNotification final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr username_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr recipientlogin_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr recipientname_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr text_;
-  ::PROTOBUF_NAMESPACE_ID::uint64 senderid_;
-  ::PROTOBUF_NAMESPACE_ID::uint32 typenotification_;
+  uint32_t typenotification_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_Server_2eproto;
+};
+// -------------------------------------------------------------------
+
+class User final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:User) */ {
+ public:
+  inline User() : User(nullptr) {}
+  ~User() override;
+  explicit constexpr User(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  User(const User& from);
+  User(User&& from) noexcept
+    : User() {
+    *this = ::std::move(from);
+  }
+
+  inline User& operator=(const User& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline User& operator=(User&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const User& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const User* internal_default_instance() {
+    return reinterpret_cast<const User*>(
+               &_User_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    3;
+
+  friend void swap(User& a, User& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(User* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(User* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline User* New() const final {
+    return new User();
+  }
+
+  User* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<User>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const User& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom(const User& from);
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(User* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "User";
+  }
+  protected:
+  explicit User(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kNameFieldNumber = 1,
+  };
+  // string name = 1;
+  void clear_name();
+  const std::string& name() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_name(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_name();
+  PROTOBUF_MUST_USE_RESULT std::string* release_name();
+  void set_allocated_name(std::string* name);
+  private:
+  const std::string& _internal_name() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_name(const std::string& value);
+  std::string* _internal_mutable_name();
+  public:
+
+  // @@protoc_insertion_point(class_scope:User)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr name_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_Server_2eproto;
 };
@@ -775,7 +1000,11 @@ class NewUserConnectNotification final :
   }
   inline NewUserConnectNotification& operator=(NewUserConnectNotification&& from) noexcept {
     if (this == &from) return *this;
-    if (GetOwningArena() == from.GetOwningArena()) {
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
       InternalSwap(&from);
     } else {
       CopyFrom(from);
@@ -800,14 +1029,19 @@ class NewUserConnectNotification final :
                &_NewUserConnectNotification_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    3;
+    4;
 
   friend void swap(NewUserConnectNotification& a, NewUserConnectNotification& b) {
     a.Swap(&b);
   }
   inline void Swap(NewUserConnectNotification* other) {
     if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
     if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
       InternalSwap(other);
     } else {
       ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
@@ -833,15 +1067,15 @@ class NewUserConnectNotification final :
   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
   void MergeFrom(const NewUserConnectNotification& from);
   private:
-  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message*to, const ::PROTOBUF_NAMESPACE_ID::Message&from);
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
   public:
   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
   bool IsInitialized() const final;
 
   size_t ByteSizeLong() const final;
   const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
-  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
-      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
   int GetCachedSize() const final { return _cached_size_.Get(); }
 
   private:
@@ -871,30 +1105,34 @@ class NewUserConnectNotification final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kUserNameFieldNumber = 2,
+    kUserFieldNumber = 2,
     kTypeNotificationFieldNumber = 1,
   };
-  // string userName = 2;
-  void clear_username();
-  const std::string& username() const;
-  template <typename ArgT0 = const std::string&, typename... ArgT>
-  void set_username(ArgT0&& arg0, ArgT... args);
-  std::string* mutable_username();
-  PROTOBUF_MUST_USE_RESULT std::string* release_username();
-  void set_allocated_username(std::string* username);
+  // repeated .User user = 2;
+  int user_size() const;
   private:
-  const std::string& _internal_username() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_username(const std::string& value);
-  std::string* _internal_mutable_username();
+  int _internal_user_size() const;
   public:
+  void clear_user();
+  ::User* mutable_user(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::User >*
+      mutable_user();
+  private:
+  const ::User& _internal_user(int index) const;
+  ::User* _internal_add_user();
+  public:
+  const ::User& user(int index) const;
+  ::User* add_user();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::User >&
+      user() const;
 
   // uint32 typeNotification = 1;
   void clear_typenotification();
-  ::PROTOBUF_NAMESPACE_ID::uint32 typenotification() const;
-  void set_typenotification(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  uint32_t typenotification() const;
+  void set_typenotification(uint32_t value);
   private:
-  ::PROTOBUF_NAMESPACE_ID::uint32 _internal_typenotification() const;
-  void _internal_set_typenotification(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  uint32_t _internal_typenotification() const;
+  void _internal_set_typenotification(uint32_t value);
   public:
 
   // @@protoc_insertion_point(class_scope:NewUserConnectNotification)
@@ -904,8 +1142,8 @@ class NewUserConnectNotification final :
   template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr username_;
-  ::PROTOBUF_NAMESPACE_ID::uint32 typenotification_;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::User > user_;
+  uint32_t typenotification_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_Server_2eproto;
 };
@@ -924,18 +1162,18 @@ class NewUserConnectNotification final :
 inline void ServerLogInNotification::clear_typenotification() {
   typenotification_ = 0u;
 }
-inline ::PROTOBUF_NAMESPACE_ID::uint32 ServerLogInNotification::_internal_typenotification() const {
+inline uint32_t ServerLogInNotification::_internal_typenotification() const {
   return typenotification_;
 }
-inline ::PROTOBUF_NAMESPACE_ID::uint32 ServerLogInNotification::typenotification() const {
+inline uint32_t ServerLogInNotification::typenotification() const {
   // @@protoc_insertion_point(field_get:ServerLogInNotification.typeNotification)
   return _internal_typenotification();
 }
-inline void ServerLogInNotification::_internal_set_typenotification(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+inline void ServerLogInNotification::_internal_set_typenotification(uint32_t value) {
   
   typenotification_ = value;
 }
-inline void ServerLogInNotification::set_typenotification(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+inline void ServerLogInNotification::set_typenotification(uint32_t value) {
   _internal_set_typenotification(value);
   // @@protoc_insertion_point(field_set:ServerLogInNotification.typeNotification)
 }
@@ -983,6 +1221,11 @@ inline void ServerLogInNotification::set_allocated_userlogin(std::string* userlo
   }
   userlogin_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), userlogin,
       GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (userlogin_.IsDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited())) {
+    userlogin_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   // @@protoc_insertion_point(field_set_allocated:ServerLogInNotification.userLogin)
 }
 
@@ -1029,45 +1272,50 @@ inline void ServerLogInNotification::set_allocated_userpass(std::string* userpas
   }
   userpass_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), userpass,
       GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (userpass_.IsDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited())) {
+    userpass_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   // @@protoc_insertion_point(field_set_allocated:ServerLogInNotification.userPass)
 }
 
-// uint64 sesionId = 4;
+// uint32 sesionId = 4;
 inline void ServerLogInNotification::clear_sesionid() {
-  sesionid_ = uint64_t{0u};
+  sesionid_ = 0u;
 }
-inline ::PROTOBUF_NAMESPACE_ID::uint64 ServerLogInNotification::_internal_sesionid() const {
+inline uint32_t ServerLogInNotification::_internal_sesionid() const {
   return sesionid_;
 }
-inline ::PROTOBUF_NAMESPACE_ID::uint64 ServerLogInNotification::sesionid() const {
+inline uint32_t ServerLogInNotification::sesionid() const {
   // @@protoc_insertion_point(field_get:ServerLogInNotification.sesionId)
   return _internal_sesionid();
 }
-inline void ServerLogInNotification::_internal_set_sesionid(::PROTOBUF_NAMESPACE_ID::uint64 value) {
+inline void ServerLogInNotification::_internal_set_sesionid(uint32_t value) {
   
   sesionid_ = value;
 }
-inline void ServerLogInNotification::set_sesionid(::PROTOBUF_NAMESPACE_ID::uint64 value) {
+inline void ServerLogInNotification::set_sesionid(uint32_t value) {
   _internal_set_sesionid(value);
   // @@protoc_insertion_point(field_set:ServerLogInNotification.sesionId)
 }
 
-// uint64 userId = 5;
+// uint32 userId = 5;
 inline void ServerLogInNotification::clear_userid() {
-  userid_ = uint64_t{0u};
+  userid_ = 0u;
 }
-inline ::PROTOBUF_NAMESPACE_ID::uint64 ServerLogInNotification::_internal_userid() const {
+inline uint32_t ServerLogInNotification::_internal_userid() const {
   return userid_;
 }
-inline ::PROTOBUF_NAMESPACE_ID::uint64 ServerLogInNotification::userid() const {
+inline uint32_t ServerLogInNotification::userid() const {
   // @@protoc_insertion_point(field_get:ServerLogInNotification.userId)
   return _internal_userid();
 }
-inline void ServerLogInNotification::_internal_set_userid(::PROTOBUF_NAMESPACE_ID::uint64 value) {
+inline void ServerLogInNotification::_internal_set_userid(uint32_t value) {
   
   userid_ = value;
 }
-inline void ServerLogInNotification::set_userid(::PROTOBUF_NAMESPACE_ID::uint64 value) {
+inline void ServerLogInNotification::set_userid(uint32_t value) {
   _internal_set_userid(value);
   // @@protoc_insertion_point(field_set:ServerLogInNotification.userId)
 }
@@ -1100,6 +1348,46 @@ inline void ServerLogInNotification::set_respose(::ServerLogInNotification_Respo
   // @@protoc_insertion_point(field_set:ServerLogInNotification.respose)
 }
 
+// repeated .User users = 7;
+inline int ServerLogInNotification::_internal_users_size() const {
+  return users_.size();
+}
+inline int ServerLogInNotification::users_size() const {
+  return _internal_users_size();
+}
+inline void ServerLogInNotification::clear_users() {
+  users_.Clear();
+}
+inline ::User* ServerLogInNotification::mutable_users(int index) {
+  // @@protoc_insertion_point(field_mutable:ServerLogInNotification.users)
+  return users_.Mutable(index);
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::User >*
+ServerLogInNotification::mutable_users() {
+  // @@protoc_insertion_point(field_mutable_list:ServerLogInNotification.users)
+  return &users_;
+}
+inline const ::User& ServerLogInNotification::_internal_users(int index) const {
+  return users_.Get(index);
+}
+inline const ::User& ServerLogInNotification::users(int index) const {
+  // @@protoc_insertion_point(field_get:ServerLogInNotification.users)
+  return _internal_users(index);
+}
+inline ::User* ServerLogInNotification::_internal_add_users() {
+  return users_.Add();
+}
+inline ::User* ServerLogInNotification::add_users() {
+  ::User* _add = _internal_add_users();
+  // @@protoc_insertion_point(field_add:ServerLogInNotification.users)
+  return _add;
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::User >&
+ServerLogInNotification::users() const {
+  // @@protoc_insertion_point(field_list:ServerLogInNotification.users)
+  return users_;
+}
+
 // -------------------------------------------------------------------
 
 // ServerRegistrationNotification
@@ -1108,38 +1396,38 @@ inline void ServerLogInNotification::set_respose(::ServerLogInNotification_Respo
 inline void ServerRegistrationNotification::clear_typenotification() {
   typenotification_ = 0u;
 }
-inline ::PROTOBUF_NAMESPACE_ID::uint32 ServerRegistrationNotification::_internal_typenotification() const {
+inline uint32_t ServerRegistrationNotification::_internal_typenotification() const {
   return typenotification_;
 }
-inline ::PROTOBUF_NAMESPACE_ID::uint32 ServerRegistrationNotification::typenotification() const {
+inline uint32_t ServerRegistrationNotification::typenotification() const {
   // @@protoc_insertion_point(field_get:ServerRegistrationNotification.typeNotification)
   return _internal_typenotification();
 }
-inline void ServerRegistrationNotification::_internal_set_typenotification(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+inline void ServerRegistrationNotification::_internal_set_typenotification(uint32_t value) {
   
   typenotification_ = value;
 }
-inline void ServerRegistrationNotification::set_typenotification(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+inline void ServerRegistrationNotification::set_typenotification(uint32_t value) {
   _internal_set_typenotification(value);
   // @@protoc_insertion_point(field_set:ServerRegistrationNotification.typeNotification)
 }
 
-// uint64 userId = 2;
+// uint32 userId = 2;
 inline void ServerRegistrationNotification::clear_userid() {
-  userid_ = uint64_t{0u};
+  userid_ = 0u;
 }
-inline ::PROTOBUF_NAMESPACE_ID::uint64 ServerRegistrationNotification::_internal_userid() const {
+inline uint32_t ServerRegistrationNotification::_internal_userid() const {
   return userid_;
 }
-inline ::PROTOBUF_NAMESPACE_ID::uint64 ServerRegistrationNotification::userid() const {
+inline uint32_t ServerRegistrationNotification::userid() const {
   // @@protoc_insertion_point(field_get:ServerRegistrationNotification.userId)
   return _internal_userid();
 }
-inline void ServerRegistrationNotification::_internal_set_userid(::PROTOBUF_NAMESPACE_ID::uint64 value) {
+inline void ServerRegistrationNotification::_internal_set_userid(uint32_t value) {
   
   userid_ = value;
 }
-inline void ServerRegistrationNotification::set_userid(::PROTOBUF_NAMESPACE_ID::uint64 value) {
+inline void ServerRegistrationNotification::set_userid(uint32_t value) {
   _internal_set_userid(value);
   // @@protoc_insertion_point(field_set:ServerRegistrationNotification.userId)
 }
@@ -1148,18 +1436,18 @@ inline void ServerRegistrationNotification::set_userid(::PROTOBUF_NAMESPACE_ID::
 inline void ServerRegistrationNotification::clear_sesionid() {
   sesionid_ = uint64_t{0u};
 }
-inline ::PROTOBUF_NAMESPACE_ID::uint64 ServerRegistrationNotification::_internal_sesionid() const {
+inline uint64_t ServerRegistrationNotification::_internal_sesionid() const {
   return sesionid_;
 }
-inline ::PROTOBUF_NAMESPACE_ID::uint64 ServerRegistrationNotification::sesionid() const {
+inline uint64_t ServerRegistrationNotification::sesionid() const {
   // @@protoc_insertion_point(field_get:ServerRegistrationNotification.sesionId)
   return _internal_sesionid();
 }
-inline void ServerRegistrationNotification::_internal_set_sesionid(::PROTOBUF_NAMESPACE_ID::uint64 value) {
+inline void ServerRegistrationNotification::_internal_set_sesionid(uint64_t value) {
   
   sesionid_ = value;
 }
-inline void ServerRegistrationNotification::set_sesionid(::PROTOBUF_NAMESPACE_ID::uint64 value) {
+inline void ServerRegistrationNotification::set_sesionid(uint64_t value) {
   _internal_set_sesionid(value);
   // @@protoc_insertion_point(field_set:ServerRegistrationNotification.sesionId)
 }
@@ -1200,18 +1488,18 @@ inline void ServerRegistrationNotification::set_response(::ServerRegistrationNot
 inline void ServerMessageNotification::clear_typenotification() {
   typenotification_ = 0u;
 }
-inline ::PROTOBUF_NAMESPACE_ID::uint32 ServerMessageNotification::_internal_typenotification() const {
+inline uint32_t ServerMessageNotification::_internal_typenotification() const {
   return typenotification_;
 }
-inline ::PROTOBUF_NAMESPACE_ID::uint32 ServerMessageNotification::typenotification() const {
+inline uint32_t ServerMessageNotification::typenotification() const {
   // @@protoc_insertion_point(field_get:ServerMessageNotification.typeNotification)
   return _internal_typenotification();
 }
-inline void ServerMessageNotification::_internal_set_typenotification(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+inline void ServerMessageNotification::_internal_set_typenotification(uint32_t value) {
   
   typenotification_ = value;
 }
-inline void ServerMessageNotification::set_typenotification(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+inline void ServerMessageNotification::set_typenotification(uint32_t value) {
   _internal_set_typenotification(value);
   // @@protoc_insertion_point(field_set:ServerMessageNotification.typeNotification)
 }
@@ -1259,30 +1547,117 @@ inline void ServerMessageNotification::set_allocated_username(std::string* usern
   }
   username_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), username,
       GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (username_.IsDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited())) {
+    username_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   // @@protoc_insertion_point(field_set_allocated:ServerMessageNotification.userName)
 }
 
-// uint64 senderId = 3;
-inline void ServerMessageNotification::clear_senderid() {
-  senderid_ = uint64_t{0u};
+// string recipientLogin = 3;
+inline void ServerMessageNotification::clear_recipientlogin() {
+  recipientlogin_.ClearToEmpty();
 }
-inline ::PROTOBUF_NAMESPACE_ID::uint64 ServerMessageNotification::_internal_senderid() const {
-  return senderid_;
+inline const std::string& ServerMessageNotification::recipientlogin() const {
+  // @@protoc_insertion_point(field_get:ServerMessageNotification.recipientLogin)
+  return _internal_recipientlogin();
 }
-inline ::PROTOBUF_NAMESPACE_ID::uint64 ServerMessageNotification::senderid() const {
-  // @@protoc_insertion_point(field_get:ServerMessageNotification.senderId)
-  return _internal_senderid();
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void ServerMessageNotification::set_recipientlogin(ArgT0&& arg0, ArgT... args) {
+ 
+ recipientlogin_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:ServerMessageNotification.recipientLogin)
 }
-inline void ServerMessageNotification::_internal_set_senderid(::PROTOBUF_NAMESPACE_ID::uint64 value) {
+inline std::string* ServerMessageNotification::mutable_recipientlogin() {
+  std::string* _s = _internal_mutable_recipientlogin();
+  // @@protoc_insertion_point(field_mutable:ServerMessageNotification.recipientLogin)
+  return _s;
+}
+inline const std::string& ServerMessageNotification::_internal_recipientlogin() const {
+  return recipientlogin_.Get();
+}
+inline void ServerMessageNotification::_internal_set_recipientlogin(const std::string& value) {
   
-  senderid_ = value;
+  recipientlogin_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
 }
-inline void ServerMessageNotification::set_senderid(::PROTOBUF_NAMESPACE_ID::uint64 value) {
-  _internal_set_senderid(value);
-  // @@protoc_insertion_point(field_set:ServerMessageNotification.senderId)
+inline std::string* ServerMessageNotification::_internal_mutable_recipientlogin() {
+  
+  return recipientlogin_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
+}
+inline std::string* ServerMessageNotification::release_recipientlogin() {
+  // @@protoc_insertion_point(field_release:ServerMessageNotification.recipientLogin)
+  return recipientlogin_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
+}
+inline void ServerMessageNotification::set_allocated_recipientlogin(std::string* recipientlogin) {
+  if (recipientlogin != nullptr) {
+    
+  } else {
+    
+  }
+  recipientlogin_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), recipientlogin,
+      GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (recipientlogin_.IsDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited())) {
+    recipientlogin_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:ServerMessageNotification.recipientLogin)
 }
 
-// string text = 4;
+// string recipientName = 4;
+inline void ServerMessageNotification::clear_recipientname() {
+  recipientname_.ClearToEmpty();
+}
+inline const std::string& ServerMessageNotification::recipientname() const {
+  // @@protoc_insertion_point(field_get:ServerMessageNotification.recipientName)
+  return _internal_recipientname();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void ServerMessageNotification::set_recipientname(ArgT0&& arg0, ArgT... args) {
+ 
+ recipientname_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:ServerMessageNotification.recipientName)
+}
+inline std::string* ServerMessageNotification::mutable_recipientname() {
+  std::string* _s = _internal_mutable_recipientname();
+  // @@protoc_insertion_point(field_mutable:ServerMessageNotification.recipientName)
+  return _s;
+}
+inline const std::string& ServerMessageNotification::_internal_recipientname() const {
+  return recipientname_.Get();
+}
+inline void ServerMessageNotification::_internal_set_recipientname(const std::string& value) {
+  
+  recipientname_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
+}
+inline std::string* ServerMessageNotification::_internal_mutable_recipientname() {
+  
+  return recipientname_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
+}
+inline std::string* ServerMessageNotification::release_recipientname() {
+  // @@protoc_insertion_point(field_release:ServerMessageNotification.recipientName)
+  return recipientname_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
+}
+inline void ServerMessageNotification::set_allocated_recipientname(std::string* recipientname) {
+  if (recipientname != nullptr) {
+    
+  } else {
+    
+  }
+  recipientname_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), recipientname,
+      GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (recipientname_.IsDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited())) {
+    recipientname_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:ServerMessageNotification.recipientName)
+}
+
+// string text = 5;
 inline void ServerMessageNotification::clear_text() {
   text_.ClearToEmpty();
 }
@@ -1325,7 +1700,67 @@ inline void ServerMessageNotification::set_allocated_text(std::string* text) {
   }
   text_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), text,
       GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (text_.IsDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited())) {
+    text_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   // @@protoc_insertion_point(field_set_allocated:ServerMessageNotification.text)
+}
+
+// -------------------------------------------------------------------
+
+// User
+
+// string name = 1;
+inline void User::clear_name() {
+  name_.ClearToEmpty();
+}
+inline const std::string& User::name() const {
+  // @@protoc_insertion_point(field_get:User.name)
+  return _internal_name();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void User::set_name(ArgT0&& arg0, ArgT... args) {
+ 
+ name_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:User.name)
+}
+inline std::string* User::mutable_name() {
+  std::string* _s = _internal_mutable_name();
+  // @@protoc_insertion_point(field_mutable:User.name)
+  return _s;
+}
+inline const std::string& User::_internal_name() const {
+  return name_.Get();
+}
+inline void User::_internal_set_name(const std::string& value) {
+  
+  name_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
+}
+inline std::string* User::_internal_mutable_name() {
+  
+  return name_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
+}
+inline std::string* User::release_name() {
+  // @@protoc_insertion_point(field_release:User.name)
+  return name_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
+}
+inline void User::set_allocated_name(std::string* name) {
+  if (name != nullptr) {
+    
+  } else {
+    
+  }
+  name_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), name,
+      GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (name_.IsDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited())) {
+    name_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:User.name)
 }
 
 // -------------------------------------------------------------------
@@ -1336,71 +1771,67 @@ inline void ServerMessageNotification::set_allocated_text(std::string* text) {
 inline void NewUserConnectNotification::clear_typenotification() {
   typenotification_ = 0u;
 }
-inline ::PROTOBUF_NAMESPACE_ID::uint32 NewUserConnectNotification::_internal_typenotification() const {
+inline uint32_t NewUserConnectNotification::_internal_typenotification() const {
   return typenotification_;
 }
-inline ::PROTOBUF_NAMESPACE_ID::uint32 NewUserConnectNotification::typenotification() const {
+inline uint32_t NewUserConnectNotification::typenotification() const {
   // @@protoc_insertion_point(field_get:NewUserConnectNotification.typeNotification)
   return _internal_typenotification();
 }
-inline void NewUserConnectNotification::_internal_set_typenotification(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+inline void NewUserConnectNotification::_internal_set_typenotification(uint32_t value) {
   
   typenotification_ = value;
 }
-inline void NewUserConnectNotification::set_typenotification(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+inline void NewUserConnectNotification::set_typenotification(uint32_t value) {
   _internal_set_typenotification(value);
   // @@protoc_insertion_point(field_set:NewUserConnectNotification.typeNotification)
 }
 
-// string userName = 2;
-inline void NewUserConnectNotification::clear_username() {
-  username_.ClearToEmpty();
+// repeated .User user = 2;
+inline int NewUserConnectNotification::_internal_user_size() const {
+  return user_.size();
 }
-inline const std::string& NewUserConnectNotification::username() const {
-  // @@protoc_insertion_point(field_get:NewUserConnectNotification.userName)
-  return _internal_username();
+inline int NewUserConnectNotification::user_size() const {
+  return _internal_user_size();
 }
-template <typename ArgT0, typename... ArgT>
-inline PROTOBUF_ALWAYS_INLINE
-void NewUserConnectNotification::set_username(ArgT0&& arg0, ArgT... args) {
- 
- username_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:NewUserConnectNotification.userName)
+inline void NewUserConnectNotification::clear_user() {
+  user_.Clear();
 }
-inline std::string* NewUserConnectNotification::mutable_username() {
-  std::string* _s = _internal_mutable_username();
-  // @@protoc_insertion_point(field_mutable:NewUserConnectNotification.userName)
-  return _s;
+inline ::User* NewUserConnectNotification::mutable_user(int index) {
+  // @@protoc_insertion_point(field_mutable:NewUserConnectNotification.user)
+  return user_.Mutable(index);
 }
-inline const std::string& NewUserConnectNotification::_internal_username() const {
-  return username_.Get();
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::User >*
+NewUserConnectNotification::mutable_user() {
+  // @@protoc_insertion_point(field_mutable_list:NewUserConnectNotification.user)
+  return &user_;
 }
-inline void NewUserConnectNotification::_internal_set_username(const std::string& value) {
-  
-  username_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
+inline const ::User& NewUserConnectNotification::_internal_user(int index) const {
+  return user_.Get(index);
 }
-inline std::string* NewUserConnectNotification::_internal_mutable_username() {
-  
-  return username_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
+inline const ::User& NewUserConnectNotification::user(int index) const {
+  // @@protoc_insertion_point(field_get:NewUserConnectNotification.user)
+  return _internal_user(index);
 }
-inline std::string* NewUserConnectNotification::release_username() {
-  // @@protoc_insertion_point(field_release:NewUserConnectNotification.userName)
-  return username_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
+inline ::User* NewUserConnectNotification::_internal_add_user() {
+  return user_.Add();
 }
-inline void NewUserConnectNotification::set_allocated_username(std::string* username) {
-  if (username != nullptr) {
-    
-  } else {
-    
-  }
-  username_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), username,
-      GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set_allocated:NewUserConnectNotification.userName)
+inline ::User* NewUserConnectNotification::add_user() {
+  ::User* _add = _internal_add_user();
+  // @@protoc_insertion_point(field_add:NewUserConnectNotification.user)
+  return _add;
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::User >&
+NewUserConnectNotification::user() const {
+  // @@protoc_insertion_point(field_list:NewUserConnectNotification.user)
+  return user_;
 }
 
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

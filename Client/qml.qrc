@@ -2,10 +2,12 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>SimplePage.qml</file>
-        <file>Albert Einstein.png</file>
+        <file>Anton.png</file>
         <file>Ernest Hemingway.png</file>
         <file>Hans Gude.png</file>
         <file>RegestrationPage.qml</file>
         <file>TitlePage.qml</file>
+        <file>Contacts.qml</file>
+        <file>ChatToolBar.qml</file>
     </qresource>
 </RCC>

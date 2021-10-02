@@ -24,6 +24,7 @@ void Client::sendLoginInNotification(const ServerLogInNotification& res)
 	std::cout << " sended sign in notification\n";
 	arrayForResponse.resize(res.ByteSizeLong());
 	res.SerializeToArray(static_cast<void*>(&arrayForResponse[0]), arrayForResponse.size());
+    std::cout<<sizeof (static_cast<QByteArray>(&arrayForResponse[0]))<<"bytes"<<std::endl;
 	m_serverSocket->write(static_cast<QByteArray>(&arrayForResponse[0]), arrayForResponse.size());
 }
 

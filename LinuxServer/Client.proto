@@ -29,7 +29,7 @@ syntax = "proto3";
 	{
 	    uint32 typeNotification=1;
 		string name=2;
-		uint64 id=3;
+                uint64 id=3;b
 		uint64 sesionId=4;
 	};
 

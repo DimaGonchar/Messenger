@@ -41,3 +41,6 @@ HEADERS += \
     Server.h \
     Server.pb.h \
     UserInformation.h
+
+SUBDIRS += \
+    ../Client/Client.pro

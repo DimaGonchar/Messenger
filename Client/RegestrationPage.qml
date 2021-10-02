@@ -15,22 +15,28 @@ Page {
         }
 
         TextField {
-            id:userLogin
+            id:login
             selectByMouse: true
             placeholderText: "login"
             Layout.fillWidth: true
         }
 
         TextField {
-            id:userPassword
-             selectByMouse: true
+            id:password
+            selectByMouse: true
             placeholderText: "password"
+            Layout.fillWidth: true
+        }
+        TextField {
+            id:confirmPassword
+            selectByMouse: true
+            placeholderText: "confirm password"
             Layout.fillWidth: true
         }
 
         TextField {
-            id:userName
-             selectByMouse: true
+            id:name
+            selectByMouse: true
             placeholderText: "name"
             Layout.fillWidth: true
         }
@@ -40,17 +46,13 @@ Page {
           id: ok
           text: "ok"
           highlighted: true
-          //Layout.alignment: Qt.AlignCenter
-//          palette{
-//              button:"green"
-//          }
 
           onClicked: {
-              client.regestration(userLogin.text, userPassword.text, userName.text)
-              //stackView.pop(titlePage);
-              userLogin.clear()
-              userPassword.clear()
-              userName.clear()
+              client.regestration(login.text, password.text, confirmPassword.text, name.text)
+              login.clear()
+              password.clear()
+              confirmPassword.clear()
+              name.clear()
           }
       }
         Button {
@@ -63,5 +65,4 @@ Page {
     }
   }
 }
-
 

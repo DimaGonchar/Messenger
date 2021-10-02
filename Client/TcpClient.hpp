@@ -1,19 +1,12 @@
-#include <QObject>
 #include <QTcpSocket>
 #include <QString>
 #include "Client.pb.h"
 #include "Server.pb.h"
 #include "NotificationTupeMoc.pb.h"
+#include "SqlContactModel.h"
 
 #ifndef TCPCLIENT_HPP
 #define TCPCLIENT_HPP
-
-struct UserInformation
-{
-     QString login;
-     QString pass;
-};
-
 
 class TcpClient : public QObject
 {
@@ -27,12 +20,11 @@ signals:
     void signUp();
     void errorMessage(const QString& error);
     void newUser(const QString& user);
-
 public slots:
     void connectToServer();
     void sendMessage(const QString& message);
     void login(const QString& userLogin, const QString& userPass);
-    void regestration(const QString& userLogin, const QString& userPass, const QString& userName);
+    void regestration(const QString& userLogin, const QString& userPass, const QString& confirmPass, const QString& userName);
 private slots:
     void onConnected();
     void onReadyRead();
@@ -45,12 +37,12 @@ private:
     std::vector<char> m_requestForServer;
     QString m_ip="127.0.0.1";//"192.168.56.1"
     std::int64_t m_port = 45000;
-    UserInformation m_uInform;
     ClientSendMessageNotification m_sendMess;
     //NotificationTupeMoc m_tMoc;
     ServerRegistrationNotification m_regNotif;
-    ServerLogInNotification m_signInNotif;
-
+    //ServerLogInNotification m_signInNotif;
+     NewUserConnectNotification user;
+     SqlContactModel* contacts=nullptr;
 };
 
 #endif // TCPCLIENT_HPP

@@ -3,6 +3,7 @@
 #include <QTimer>
 #include <algorithm>
 #include "NotificationType.hpp"
+#include <iostream>
 
 ChatServer::ChatServer(QObject *parent)
 	: QTcpServer(parent)
@@ -14,7 +15,7 @@ ChatServer::ChatServer(QObject *parent)
     qRegisterMetaType<ClientSignInNotification>("ClientSignInNotification");
 	qRegisterMetaType<ClientSendMessageNotification>("ClientSendMessageNotification");
 	qRegisterMetaType<UserInformation>("UserInformation");
-    m_database=new Database("/home/dima/Documents/Messenger/usersDatabase.sqlite3");
+    m_database=new Database;
 }
 
 void ChatServer::incomingConnection(std::int64_t  socketDescriptor)
@@ -79,20 +80,14 @@ bool ChatServer::Regestration(Client* client, const UserInformation& userInfo)
 
 	ServerRegistrationNotification response;
 	response.set_typenotification(NotificationType::Registration);
-//	if(m_database->SaveUserToDatabase(userInfo))
-//    {
-//        response.set_response(ServerRegistrationNotification_Response_REGISTRATION_IS_SUCCESFUL);
-//		std::cout << "REGISTRATION_IS_SUCCESFUL\n";
-//		RegistrationNotification(client, response, 0);
-//    }
-	if (IfUserExists(userInfo)==false)
-	{
-		m_registeredUsers.emplace_back(userInfo);
-		response.set_response(ServerRegistrationNotification_Response_REGISTRATION_IS_SUCCESFUL);
-		std::cout << "REGISTRATION_IS_SUCCESFUL\n";
-		RegistrationNotification(client, response, 0);
-		return true;
-	}
+    if(m_database->SaveUserToDatabase(userInfo))
+    {
+        response.set_response(ServerRegistrationNotification_Response_REGISTRATION_IS_SUCCESFUL);
+        std::cout << "REGISTRATION_IS_SUCCESFUL\n";
+        RegistrationNotification(client, response, 0);
+        return true;
+    }
+
 	else
 	{
 		response.set_response(ServerRegistrationNotification_Response_USER_EXISTS);
@@ -107,27 +102,33 @@ void ChatServer::SignIn(Client* client,const UserInformation& userInfo)
  {
 	 ServerLogInNotification res;
 	 res.set_typenotification(NotificationType::SignIn);
-	 if (IfUserExists(userInfo)==true)
-	 {
-		 if (GetUser(userInfo).GetPass() == userInfo.GetPass())
-		 {
-			 res.set_respose(ServerLogInNotification_Response_AUTHORIZATION_IS_SUCCESFUL);
-			 std::cout << "AUTHORIZATION_IS_SUCCESFUL\n";
-			 LoginInNotification(client, res, 0);
-		 }
-		 else
-		 {
-			 std::cout << "AUTHORIZATION_FAILD\n";
-			 res.set_respose(ServerLogInNotification_Response_AUTHORIZATION_FAILD);
-			 LoginInNotification(client, res, 0);
-		 }
-	 }
-	 else
-	 {
-		 std::cout << "USER_NOT_FOUND\n";
-		 res.set_respose(ServerLogInNotification_Response_USER_NOT_FOUND);
-		 LoginInNotification(client, res, 0);
-	 }
+     if(m_database->VerificationOfLoginDetails(userInfo)==ServerLogInNotification_Response_AUTHORIZATION_IS_SUCCESFUL)
+     {
+        std::vector<std::string> users=m_database->GetUsers();
+  //        User*user=res.add_users();
+          std::cout<<"Verification is TRUE"<<std::endl;
+  //        std::cout<<users[0]<<std::endl;
+ //         user->set_name(users[0]);
+ //         std::cout<<res.users_size()<<std::endl;
+ //         std::vector<char>  arrayForResponse;
+//          arrayForResponse.resize(res.ByteSizeLong());
+//          res.SerializeToArray(static_cast<void*>(&arrayForResponse[0]), arrayForResponse.size());
+//          res.ParseFromArray(static_cast<void*>(&arrayForResponse[0]), arrayForResponse.size());
+//          std::cout<<res.users_size()<<std::endl;
+ //         std::cout<<res.users(0).name()<<std::endl;
+          res.set_respose(ServerLogInNotification_Response_AUTHORIZATION_IS_SUCCESFUL);
+               LoginInNotification(client, res, 0);
+     }
+     if(m_database->VerificationOfLoginDetails(userInfo)==ServerLogInNotification_Response_AUTHORIZATION_FAILD)
+     {
+         res.set_respose(ServerLogInNotification_Response_AUTHORIZATION_FAILD);
+     }
+     if(m_database->VerificationOfLoginDetails(userInfo)==ServerLogInNotification_Response_USER_NOT_FOUND)
+     {
+         res.set_respose(ServerLogInNotification_Response_USER_NOT_FOUND);
+     }
+    // LoginInNotification(client, res, 0);
+
  }
 
 bool ChatServer::IfUserExists(const UserInformation& userInfo)
@@ -157,11 +158,10 @@ bool ChatServer::IfUserExists(const UserInformation& userInfo)
 void ChatServer::registrationNotificationReceived(Client* sender, const ClientRegistrationNotification& data)
 {
 	std::cout << "Registration\n";
-	if (Regestration(sender, UserInformation(data.login(), data.pass())))
+    if (Regestration(sender, UserInformation(data.login(), data.pass(),data.username())))
 	{
 		NewUserConnectNotification newConnection;
 		newConnection.set_typenotification(NotificationType::NewUserConnect);
-		newConnection.set_username(data.username());
 		broadcastUserConnectionNotification(newConnection, sender);
 	}
 }

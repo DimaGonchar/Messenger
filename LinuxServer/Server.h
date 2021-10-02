@@ -2,7 +2,7 @@
 #ifndef SERVER_H
 #define SERVER_H
 
-#include <QtNetwork/QTcpServer>
+#include <QTcpServer>
 #include "ChatServer.h"
 
 class Server : public QTcpServer
@@ -12,7 +12,7 @@ public:
 	Server();
 	~Server();
 public slots:
-    void incomingConnection(qintptr socketDescriptor)override;
+    void incomingConnection(qintptr socketDescriptor);
 	void logMessage(const QString& mess);
 private:void startServer();
 private:

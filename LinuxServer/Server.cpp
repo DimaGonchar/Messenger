@@ -19,7 +19,7 @@ void Server::logMessage(const QString& mess)
 	qInfo()<<mess;
 }
 
-void Server::incomingConnection (qintptr  socketDescriptor)
+void Server::incomingConnection(qintptr socketDescriptor)
 {
 	m_chatServer->incomingConnection(socketDescriptor);
 }

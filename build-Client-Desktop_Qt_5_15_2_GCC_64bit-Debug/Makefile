@@ -14,10 +14,10 @@ EQ            = =
 
 CC            = gcc
 CXX           = g++
-DEFINES       = -DQT_QML_DEBUG -DQT_QUICK_LIB -DQT_GUI_LIB -DQT_QMLMODELS_LIB -DQT_QML_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB
+DEFINES       = -DQT_QML_DEBUG -DQT_QUICK_LIB -DQT_GUI_LIB -DQT_QMLMODELS_LIB -DQT_QML_LIB -DQT_NETWORK_LIB -DQT_SQL_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -g -Wall -Wextra -D_REENTRANT -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -g -std=gnu++11 -Wall -Wextra -D_REENTRANT -fPIC $(DEFINES)
-INCPATH       = -I../Client -I. -I../../../Qt/5.15.2/gcc_64/include -I../../../Qt/5.15.2/gcc_64/include/QtQuick -I../../../Qt/5.15.2/gcc_64/include/QtGui -I../../../Qt/5.15.2/gcc_64/include/QtQmlModels -I../../../Qt/5.15.2/gcc_64/include/QtQml -I../../../Qt/5.15.2/gcc_64/include/QtNetwork -I../../../Qt/5.15.2/gcc_64/include/QtCore -I. -I/usr/include/libdrm -I../../../Qt/5.15.2/gcc_64/mkspecs/linux-g++
+INCPATH       = -I../Client -I. -I../../../Qt/5.15.2/gcc_64/include -I../../../Qt/5.15.2/gcc_64/include/QtQuick -I../../../Qt/5.15.2/gcc_64/include/QtGui -I../../../Qt/5.15.2/gcc_64/include/QtQmlModels -I../../../Qt/5.15.2/gcc_64/include/QtQml -I../../../Qt/5.15.2/gcc_64/include/QtNetwork -I../../../Qt/5.15.2/gcc_64/include/QtSql -I../../../Qt/5.15.2/gcc_64/include/QtCore -I. -I/usr/include/libdrm -I../../../Qt/5.15.2/gcc_64/mkspecs/linux-g++
 QMAKE         = /home/dima/Qt/5.15.2/gcc_64/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -40,7 +40,7 @@ DISTNAME      = Client1.0.0
 DISTDIR = /home/dima/Documents/Messenger/build-Client-Desktop_Qt_5_15_2_GCC_64bit-Debug/.tmp/Client1.0.0
 LINK          = g++
 LFLAGS        = -Wl,-rpath,/home/dima/Qt/5.15.2/gcc_64/lib
-LIBS          = $(SUBLIBS) -lprotobuf /home/dima/Qt/5.15.2/gcc_64/lib/libQt5Quick.so /home/dima/Qt/5.15.2/gcc_64/lib/libQt5Gui.so /home/dima/Qt/5.15.2/gcc_64/lib/libQt5QmlModels.so /home/dima/Qt/5.15.2/gcc_64/lib/libQt5Qml.so /home/dima/Qt/5.15.2/gcc_64/lib/libQt5Network.so /home/dima/Qt/5.15.2/gcc_64/lib/libQt5Core.so -lGL -lpthread   
+LIBS          = $(SUBLIBS) -lprotobuf /home/dima/Qt/5.15.2/gcc_64/lib/libQt5Quick.so /home/dima/Qt/5.15.2/gcc_64/lib/libQt5Gui.so /home/dima/Qt/5.15.2/gcc_64/lib/libQt5QmlModels.so /home/dima/Qt/5.15.2/gcc_64/lib/libQt5Qml.so /home/dima/Qt/5.15.2/gcc_64/lib/libQt5Network.so /home/dima/Qt/5.15.2/gcc_64/lib/libQt5Sql.so /home/dima/Qt/5.15.2/gcc_64/lib/libQt5Core.so -lGL -lpthread   
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -55,17 +55,38 @@ OBJECTS_DIR   = ./
 SOURCES       = ../Client/Client.pb.cc \
 		../Client/NotificationTupeMoc.pb.cc \
 		../Client/Server.pb.cc \
+		../Client/SqlContactModel.cpp \
+		../Client/SqlConversationModel.cpp \
 		../Client/TpClient.cpp \
-		../Client/main.cpp qrc_qml.cpp \
+		../Client/main.cpp ChatToolBar_qml.cpp \
+		TitlePage_qml.cpp \
+		RegestrationPage_qml.cpp \
+		SimplePage_qml.cpp \
+		Contacts_qml.cpp \
+		main_qml.cpp \
+		qmlcache_loader.cpp \
+		qrc_qml_qmlcache.cpp \
+		moc_SqlContactModel.cpp \
 		moc_TcpClient.cpp
 OBJECTS       = Client.pb.o \
 		NotificationTupeMoc.pb.o \
 		Server.pb.o \
+		SqlContactModel.o \
+		SqlConversationModel.o \
 		TpClient.o \
 		main.o \
-		qrc_qml.o \
+		ChatToolBar_qml.o \
+		TitlePage_qml.o \
+		RegestrationPage_qml.o \
+		SimplePage_qml.o \
+		Contacts_qml.o \
+		main_qml.o \
+		qmlcache_loader.o \
+		qrc_qml_qmlcache.o \
+		moc_SqlContactModel.o \
 		moc_TcpClient.o
-DIST          = ../Client/Client.proto \
+DIST          = ../Client/ChatToolBar.qml \
+		../Client/Client.proto \
 		../Client/NotificationTupeMoc.proto \
 		../Client/Server.proto \
 		../../../Qt/5.15.2/gcc_64/mkspecs/features/spec_pre.prf \
@@ -246,10 +267,11 @@ DIST          = ../Client/Client.proto \
 		../../../Qt/5.15.2/gcc_64/mkspecs/features/default_pre.prf \
 		../../../Qt/5.15.2/gcc_64/mkspecs/features/resolve_config.prf \
 		../../../Qt/5.15.2/gcc_64/mkspecs/features/default_post.prf \
+		../../../Qt/5.15.2/gcc_64/mkspecs/features/resources_functions.prf \
+		../../../Qt/5.15.2/gcc_64/mkspecs/features/qtquickcompiler.prf \
 		../../../Qt/5.15.2/gcc_64/mkspecs/features/qml_debug.prf \
 		../../../Qt/5.15.2/gcc_64/mkspecs/features/warn_on.prf \
 		../../../Qt/5.15.2/gcc_64/mkspecs/features/qt.prf \
-		../../../Qt/5.15.2/gcc_64/mkspecs/features/resources_functions.prf \
 		../../../Qt/5.15.2/gcc_64/mkspecs/features/resources.prf \
 		../../../Qt/5.15.2/gcc_64/mkspecs/features/moc.prf \
 		../../../Qt/5.15.2/gcc_64/mkspecs/features/unix/opengl.prf \
@@ -264,9 +286,13 @@ DIST          = ../Client/Client.proto \
 		../Client/NotificationTupeMoc.pb.h \
 		../Client/NotificationType.hpp \
 		../Client/Server.pb.h \
+		../Client/SqlContactModel.h \
+		../Client/SqlConversationModel.h \
 		../Client/TcpClient.hpp ../Client/Client.pb.cc \
 		../Client/NotificationTupeMoc.pb.cc \
 		../Client/Server.pb.cc \
+		../Client/SqlContactModel.cpp \
+		../Client/SqlConversationModel.cpp \
 		../Client/TpClient.cpp \
 		../Client/main.cpp
 QMAKE_TARGET  = Client
@@ -458,10 +484,11 @@ Makefile: ../Client/Client.pro ../../../Qt/5.15.2/gcc_64/mkspecs/linux-g++/qmake
 		../../../Qt/5.15.2/gcc_64/mkspecs/features/default_pre.prf \
 		../../../Qt/5.15.2/gcc_64/mkspecs/features/resolve_config.prf \
 		../../../Qt/5.15.2/gcc_64/mkspecs/features/default_post.prf \
+		../../../Qt/5.15.2/gcc_64/mkspecs/features/resources_functions.prf \
+		../../../Qt/5.15.2/gcc_64/mkspecs/features/qtquickcompiler.prf \
 		../../../Qt/5.15.2/gcc_64/mkspecs/features/qml_debug.prf \
 		../../../Qt/5.15.2/gcc_64/mkspecs/features/warn_on.prf \
 		../../../Qt/5.15.2/gcc_64/mkspecs/features/qt.prf \
-		../../../Qt/5.15.2/gcc_64/mkspecs/features/resources_functions.prf \
 		../../../Qt/5.15.2/gcc_64/mkspecs/features/resources.prf \
 		../../../Qt/5.15.2/gcc_64/mkspecs/features/moc.prf \
 		../../../Qt/5.15.2/gcc_64/mkspecs/features/unix/opengl.prf \
@@ -473,7 +500,7 @@ Makefile: ../Client/Client.pro ../../../Qt/5.15.2/gcc_64/mkspecs/linux-g++/qmake
 		../../../Qt/5.15.2/gcc_64/mkspecs/features/yacc.prf \
 		../../../Qt/5.15.2/gcc_64/mkspecs/features/lex.prf \
 		../Client/Client.pro \
-		../Client/qml.qrc
+		qml_qmlcache.qrc
 	$(QMAKE) -o Makefile ../Client/Client.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug
 ../../../Qt/5.15.2/gcc_64/mkspecs/features/spec_pre.prf:
 ../../../Qt/5.15.2/gcc_64/mkspecs/common/unix.conf:
@@ -653,10 +680,11 @@ Makefile: ../Client/Client.pro ../../../Qt/5.15.2/gcc_64/mkspecs/linux-g++/qmake
 ../../../Qt/5.15.2/gcc_64/mkspecs/features/default_pre.prf:
 ../../../Qt/5.15.2/gcc_64/mkspecs/features/resolve_config.prf:
 ../../../Qt/5.15.2/gcc_64/mkspecs/features/default_post.prf:
+../../../Qt/5.15.2/gcc_64/mkspecs/features/resources_functions.prf:
+../../../Qt/5.15.2/gcc_64/mkspecs/features/qtquickcompiler.prf:
 ../../../Qt/5.15.2/gcc_64/mkspecs/features/qml_debug.prf:
 ../../../Qt/5.15.2/gcc_64/mkspecs/features/warn_on.prf:
 ../../../Qt/5.15.2/gcc_64/mkspecs/features/qt.prf:
-../../../Qt/5.15.2/gcc_64/mkspecs/features/resources_functions.prf:
 ../../../Qt/5.15.2/gcc_64/mkspecs/features/resources.prf:
 ../../../Qt/5.15.2/gcc_64/mkspecs/features/moc.prf:
 ../../../Qt/5.15.2/gcc_64/mkspecs/features/unix/opengl.prf:
@@ -668,7 +696,7 @@ Makefile: ../Client/Client.pro ../../../Qt/5.15.2/gcc_64/mkspecs/linux-g++/qmake
 ../../../Qt/5.15.2/gcc_64/mkspecs/features/yacc.prf:
 ../../../Qt/5.15.2/gcc_64/mkspecs/features/lex.prf:
 ../Client/Client.pro:
-../Client/qml.qrc:
+qml_qmlcache.qrc:
 qmake: FORCE
 	@$(QMAKE) -o Makefile ../Client/Client.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug
 
@@ -683,10 +711,12 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
+	$(COPY_FILE) --parents ../Client/ChatToolBar.qml ../Client/TitlePage.qml ../Client/RegestrationPage.qml ../Client/SimplePage.qml ../Client/Contacts.qml ../Client/main.qml $(DISTDIR)/
 	$(COPY_FILE) --parents ../Client/qml.qrc $(DISTDIR)/
+	$(COPY_FILE) --parents qml_qmlcache.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents ../../../Qt/5.15.2/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../Client/Client.pb.h ../Client/NotificationTupeMoc.pb.h ../Client/NotificationType.hpp ../Client/Server.pb.h ../Client/TcpClient.hpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../Client/Client.pb.cc ../Client/NotificationTupeMoc.pb.cc ../Client/Server.pb.cc ../Client/TpClient.cpp ../Client/main.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../Client/Client.pb.h ../Client/NotificationTupeMoc.pb.h ../Client/NotificationType.hpp ../Client/Server.pb.h ../Client/SqlContactModel.h ../Client/SqlConversationModel.h ../Client/TcpClient.hpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../Client/Client.pb.cc ../Client/NotificationTupeMoc.pb.cc ../Client/Server.pb.cc ../Client/SqlContactModel.cpp ../Client/SqlConversationModel.cpp ../Client/TpClient.cpp ../Client/main.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -710,19 +740,54 @@ check: first
 
 benchmark: first
 
-compiler_rcc_make_all: qrc_qml.cpp
+compiler_qmlcache_make_all: ChatToolBar_qml.cpp TitlePage_qml.cpp RegestrationPage_qml.cpp SimplePage_qml.cpp Contacts_qml.cpp main_qml.cpp
+compiler_qmlcache_clean:
+	-$(DEL_FILE) ChatToolBar_qml.cpp TitlePage_qml.cpp RegestrationPage_qml.cpp SimplePage_qml.cpp Contacts_qml.cpp main_qml.cpp
+ChatToolBar_qml.cpp: ../Client/ChatToolBar.qml \
+		../../../Qt/5.15.2/gcc_64/bin/qmlcachegen
+	/home/dima/Qt/5.15.2/gcc_64/bin/qmlcachegen --resource=/home/dima/Documents/Messenger/Client/qml.qrc -o ChatToolBar_qml.cpp ../Client/ChatToolBar.qml
+
+TitlePage_qml.cpp: ../Client/TitlePage.qml \
+		../../../Qt/5.15.2/gcc_64/bin/qmlcachegen
+	/home/dima/Qt/5.15.2/gcc_64/bin/qmlcachegen --resource=/home/dima/Documents/Messenger/Client/qml.qrc -o TitlePage_qml.cpp ../Client/TitlePage.qml
+
+RegestrationPage_qml.cpp: ../Client/RegestrationPage.qml \
+		../../../Qt/5.15.2/gcc_64/bin/qmlcachegen
+	/home/dima/Qt/5.15.2/gcc_64/bin/qmlcachegen --resource=/home/dima/Documents/Messenger/Client/qml.qrc -o RegestrationPage_qml.cpp ../Client/RegestrationPage.qml
+
+SimplePage_qml.cpp: ../Client/SimplePage.qml \
+		../../../Qt/5.15.2/gcc_64/bin/qmlcachegen
+	/home/dima/Qt/5.15.2/gcc_64/bin/qmlcachegen --resource=/home/dima/Documents/Messenger/Client/qml.qrc -o SimplePage_qml.cpp ../Client/SimplePage.qml
+
+Contacts_qml.cpp: ../Client/Contacts.qml \
+		../../../Qt/5.15.2/gcc_64/bin/qmlcachegen
+	/home/dima/Qt/5.15.2/gcc_64/bin/qmlcachegen --resource=/home/dima/Documents/Messenger/Client/qml.qrc -o Contacts_qml.cpp ../Client/Contacts.qml
+
+main_qml.cpp: ../Client/main.qml \
+		../../../Qt/5.15.2/gcc_64/bin/qmlcachegen
+	/home/dima/Qt/5.15.2/gcc_64/bin/qmlcachegen --resource=/home/dima/Documents/Messenger/Client/qml.qrc -o main_qml.cpp ../Client/main.qml
+
+compiler_qmlcache_loader_make_all: qmlcache_loader.cpp
+compiler_qmlcache_loader_clean:
+	-$(DEL_FILE) qmlcache_loader.cpp
+qmlcache_loader.cpp: ../Client/qml.qrc ../../../Qt/5.15.2/gcc_64/bin/qmlcachegen
+	/home/dima/Qt/5.15.2/gcc_64/bin/qmlcachegen --resource-file-mapping=/home/dima/Documents/Messenger/Client/qml.qrc=/home/dima/Documents/Messenger/build-Client-Desktop_Qt_5_15_2_GCC_64bit-Debug/qml_qmlcache.qrc -o qmlcache_loader.cpp ../Client/qml.qrc
+
+compiler_rcc_make_all: qrc_qml_qmlcache.cpp
 compiler_rcc_clean:
-	-$(DEL_FILE) qrc_qml.cpp
-qrc_qml.cpp: ../Client/qml.qrc \
+	-$(DEL_FILE) qrc_qml_qmlcache.cpp
+qrc_qml_qmlcache.cpp: qml_qmlcache.qrc \
 		../../../Qt/5.15.2/gcc_64/bin/rcc \
-		../Client/Albert\ Einstein.png \
+		../Client/ChatToolBar.qml \
 		../Client/TitlePage.qml \
 		../Client/RegestrationPage.qml \
 		../Client/SimplePage.qml \
+		../Client/Anton.png \
 		../Client/Ernest\ Hemingway.png \
 		../Client/Hans\ Gude.png \
+		../Client/Contacts.qml \
 		../Client/main.qml
-	/home/dima/Qt/5.15.2/gcc_64/bin/rcc -name qml ../Client/qml.qrc -o qrc_qml.cpp
+	/home/dima/Qt/5.15.2/gcc_64/bin/rcc -name qml_qmlcache qml_qmlcache.qrc -o qrc_qml_qmlcache.cpp
 
 compiler_moc_predefs_make_all: moc_predefs.h
 compiler_moc_predefs_clean:
@@ -730,14 +795,13 @@ compiler_moc_predefs_clean:
 moc_predefs.h: ../../../Qt/5.15.2/gcc_64/mkspecs/features/data/dummy.cpp
 	g++ -pipe -g -std=gnu++11 -Wall -Wextra -dM -E -o moc_predefs.h ../../../Qt/5.15.2/gcc_64/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_TcpClient.cpp
+compiler_moc_header_make_all: moc_SqlContactModel.cpp moc_TcpClient.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_TcpClient.cpp
-moc_TcpClient.cpp: ../Client/TcpClient.hpp \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/QObject \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qobject.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qobjectdefs.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qnamespace.h \
+	-$(DEL_FILE) moc_SqlContactModel.cpp moc_TcpClient.cpp
+moc_SqlContactModel.cpp: ../Client/SqlContactModel.h \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/QSqlQueryModel \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/qsqlquerymodel.h \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/qtsqlglobal.h \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/qglobal.h \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/qconfig-bootstrapped.h \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/qconfig.h \
@@ -759,6 +823,93 @@ moc_TcpClient.cpp: ../Client/TcpClient.hpp \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/qmutex.h \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/qnumeric.h \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/qversiontagging.h \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/qtsql-config.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qabstractitemmodel.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qvariant.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qbytearray.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qrefcount.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qnamespace.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qarraydata.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qlist.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qalgorithms.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qiterator.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qhashfunctions.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qstring.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qchar.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qstringliteral.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qstringalgorithms.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qstringview.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qstringbuilder.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qpair.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qvector.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qcontainertools_impl.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qpoint.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qbytearraylist.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qstringlist.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qregexp.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qstringmatcher.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qmetatype.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qvarlengtharray.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qcontainerfwd.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qobjectdefs.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qmap.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qdebug.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qhash.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qtextstream.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qiodevice.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qobject.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qcoreevent.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qscopedpointer.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qobject_impl.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qlocale.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qshareddata.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qset.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qcontiguouscache.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qsharedpointer.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/qsqldatabase.h \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/QSqlQuery \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/qsqlquery.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/QObject \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/QSqlError \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/qsqlerror.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/QDebug \
+		moc_predefs.h \
+		../../../Qt/5.15.2/gcc_64/bin/moc
+	/home/dima/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/dima/Documents/Messenger/build-Client-Desktop_Qt_5_15_2_GCC_64bit-Debug/moc_predefs.h -I/home/dima/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/dima/Documents/Messenger/Client -I/home/dima/Qt/5.15.2/gcc_64/include -I/home/dima/Qt/5.15.2/gcc_64/include/QtQuick -I/home/dima/Qt/5.15.2/gcc_64/include/QtGui -I/home/dima/Qt/5.15.2/gcc_64/include/QtQmlModels -I/home/dima/Qt/5.15.2/gcc_64/include/QtQml -I/home/dima/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/dima/Qt/5.15.2/gcc_64/include/QtSql -I/home/dima/Qt/5.15.2/gcc_64/include/QtCore -I. -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../Client/SqlContactModel.h -o moc_SqlContactModel.cpp
+
+moc_TcpClient.cpp: ../Client/TcpClient.hpp \
+		../../../Qt/5.15.2/gcc_64/include/QtNetwork/QTcpSocket \
+		../../../Qt/5.15.2/gcc_64/include/QtNetwork/qtcpsocket.h \
+		../../../Qt/5.15.2/gcc_64/include/QtNetwork/qtnetworkglobal.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qglobal.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qconfig.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qtcore-config.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qsystemdetection.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qprocessordetection.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qcompilerdetection.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qtypeinfo.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qsysinfo.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qlogging.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qflags.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qatomic.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qbasicatomic.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qgenericatomic.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qatomic_cxx11.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qatomic_msvc.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qglobalstatic.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qmutex.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qnumeric.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qversiontagging.h \
+		../../../Qt/5.15.2/gcc_64/include/QtNetwork/qtnetwork-config.h \
+		../../../Qt/5.15.2/gcc_64/include/QtNetwork/qabstractsocket.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qiodevice.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qobject.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qobjectdefs.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qnamespace.h \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/qobjectdefs_impl.h \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/qstring.h \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/qchar.h \
@@ -787,12 +938,6 @@ moc_TcpClient.cpp: ../Client/TcpClient.hpp \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/qvarlengtharray.h \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/qcontainerfwd.h \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/qobject_impl.h \
-		../../../Qt/5.15.2/gcc_64/include/QtNetwork/QTcpSocket \
-		../../../Qt/5.15.2/gcc_64/include/QtNetwork/qtcpsocket.h \
-		../../../Qt/5.15.2/gcc_64/include/QtNetwork/qtnetworkglobal.h \
-		../../../Qt/5.15.2/gcc_64/include/QtNetwork/qtnetwork-config.h \
-		../../../Qt/5.15.2/gcc_64/include/QtNetwork/qabstractsocket.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qiodevice.h \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/qdebug.h \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/qhash.h \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/qmap.h \
@@ -808,9 +953,22 @@ moc_TcpClient.cpp: ../Client/TcpClient.hpp \
 		../Client/Client.pb.h \
 		../Client/Server.pb.h \
 		../Client/NotificationTupeMoc.pb.h \
+		../Client/SqlContactModel.h \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/QSqlQueryModel \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/qsqlquerymodel.h \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/qtsqlglobal.h \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/qtsql-config.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qabstractitemmodel.h \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/qsqldatabase.h \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/QSqlQuery \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/qsqlquery.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/QObject \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/QSqlError \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/qsqlerror.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/QDebug \
 		moc_predefs.h \
 		../../../Qt/5.15.2/gcc_64/bin/moc
-	/home/dima/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/dima/Documents/Messenger/build-Client-Desktop_Qt_5_15_2_GCC_64bit-Debug/moc_predefs.h -I/home/dima/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/dima/Documents/Messenger/Client -I/home/dima/Qt/5.15.2/gcc_64/include -I/home/dima/Qt/5.15.2/gcc_64/include/QtQuick -I/home/dima/Qt/5.15.2/gcc_64/include/QtGui -I/home/dima/Qt/5.15.2/gcc_64/include/QtQmlModels -I/home/dima/Qt/5.15.2/gcc_64/include/QtQml -I/home/dima/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/dima/Qt/5.15.2/gcc_64/include/QtCore -I. -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../Client/TcpClient.hpp -o moc_TcpClient.cpp
+	/home/dima/Qt/5.15.2/gcc_64/bin/moc $(DEFINES) --include /home/dima/Documents/Messenger/build-Client-Desktop_Qt_5_15_2_GCC_64bit-Debug/moc_predefs.h -I/home/dima/Qt/5.15.2/gcc_64/mkspecs/linux-g++ -I/home/dima/Documents/Messenger/Client -I/home/dima/Qt/5.15.2/gcc_64/include -I/home/dima/Qt/5.15.2/gcc_64/include/QtQuick -I/home/dima/Qt/5.15.2/gcc_64/include/QtGui -I/home/dima/Qt/5.15.2/gcc_64/include/QtQmlModels -I/home/dima/Qt/5.15.2/gcc_64/include/QtQml -I/home/dima/Qt/5.15.2/gcc_64/include/QtNetwork -I/home/dima/Qt/5.15.2/gcc_64/include/QtSql -I/home/dima/Qt/5.15.2/gcc_64/include/QtCore -I. -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../Client/TcpClient.hpp -o moc_TcpClient.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -822,7 +980,7 @@ compiler_yacc_impl_make_all:
 compiler_yacc_impl_clean:
 compiler_lex_make_all:
 compiler_lex_clean:
-compiler_clean: compiler_rcc_clean compiler_moc_predefs_clean compiler_moc_header_clean 
+compiler_clean: compiler_qmlcache_clean compiler_qmlcache_loader_clean compiler_rcc_clean compiler_moc_predefs_clean compiler_moc_header_clean 
 
 ####### Compile
 
@@ -835,11 +993,10 @@ NotificationTupeMoc.pb.o: ../Client/NotificationTupeMoc.pb.cc ../Client/Notifica
 Server.pb.o: ../Client/Server.pb.cc ../Client/Server.pb.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Server.pb.o ../Client/Server.pb.cc
 
-TpClient.o: ../Client/TpClient.cpp ../Client/TcpClient.hpp \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/QObject \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qobject.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qobjectdefs.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qnamespace.h \
+SqlContactModel.o: ../Client/SqlContactModel.cpp ../Client/SqlContactModel.h \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/QSqlQueryModel \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/qsqlquerymodel.h \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/qtsqlglobal.h \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/qglobal.h \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/qconfig-bootstrapped.h \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/qconfig.h \
@@ -861,6 +1018,94 @@ TpClient.o: ../Client/TpClient.cpp ../Client/TcpClient.hpp \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/qmutex.h \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/qnumeric.h \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/qversiontagging.h \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/qtsql-config.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qabstractitemmodel.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qvariant.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qbytearray.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qrefcount.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qnamespace.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qarraydata.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qlist.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qalgorithms.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qiterator.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qhashfunctions.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qstring.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qchar.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qstringliteral.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qstringalgorithms.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qstringview.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qstringbuilder.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qpair.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qvector.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qcontainertools_impl.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qpoint.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qbytearraylist.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qstringlist.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qregexp.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qstringmatcher.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qmetatype.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qvarlengtharray.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qcontainerfwd.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qobjectdefs.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qmap.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qdebug.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qhash.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qtextstream.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qiodevice.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qobject.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qcoreevent.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qscopedpointer.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qobject_impl.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qlocale.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qshareddata.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qset.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qcontiguouscache.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qsharedpointer.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/qsqldatabase.h \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/QSqlQuery \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/qsqlquery.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/QObject \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/QSqlError \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/qsqlerror.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/QDebug
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o SqlContactModel.o ../Client/SqlContactModel.cpp
+
+SqlConversationModel.o: ../Client/SqlConversationModel.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o SqlConversationModel.o ../Client/SqlConversationModel.cpp
+
+TpClient.o: ../Client/TpClient.cpp ../Client/TcpClient.hpp \
+		../../../Qt/5.15.2/gcc_64/include/QtNetwork/QTcpSocket \
+		../../../Qt/5.15.2/gcc_64/include/QtNetwork/qtcpsocket.h \
+		../../../Qt/5.15.2/gcc_64/include/QtNetwork/qtnetworkglobal.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qglobal.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qconfig.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qtcore-config.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qsystemdetection.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qprocessordetection.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qcompilerdetection.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qtypeinfo.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qsysinfo.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qlogging.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qflags.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qatomic.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qbasicatomic.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qgenericatomic.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qatomic_cxx11.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qatomic_msvc.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qglobalstatic.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qmutex.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qnumeric.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qversiontagging.h \
+		../../../Qt/5.15.2/gcc_64/include/QtNetwork/qtnetwork-config.h \
+		../../../Qt/5.15.2/gcc_64/include/QtNetwork/qabstractsocket.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qiodevice.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qobject.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qobjectdefs.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qnamespace.h \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/qobjectdefs_impl.h \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/qstring.h \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/qchar.h \
@@ -889,12 +1134,6 @@ TpClient.o: ../Client/TpClient.cpp ../Client/TcpClient.hpp \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/qvarlengtharray.h \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/qcontainerfwd.h \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/qobject_impl.h \
-		../../../Qt/5.15.2/gcc_64/include/QtNetwork/QTcpSocket \
-		../../../Qt/5.15.2/gcc_64/include/QtNetwork/qtcpsocket.h \
-		../../../Qt/5.15.2/gcc_64/include/QtNetwork/qtnetworkglobal.h \
-		../../../Qt/5.15.2/gcc_64/include/QtNetwork/qtnetwork-config.h \
-		../../../Qt/5.15.2/gcc_64/include/QtNetwork/qabstractsocket.h \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/qiodevice.h \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/qdebug.h \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/qhash.h \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/qmap.h \
@@ -910,8 +1149,20 @@ TpClient.o: ../Client/TpClient.cpp ../Client/TcpClient.hpp \
 		../Client/Client.pb.h \
 		../Client/Server.pb.h \
 		../Client/NotificationTupeMoc.pb.h \
-		../Client/NotificationType.hpp \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/QDebug
+		../Client/SqlContactModel.h \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/QSqlQueryModel \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/qsqlquerymodel.h \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/qtsqlglobal.h \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/qtsql-config.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qabstractitemmodel.h \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/qsqldatabase.h \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/QSqlQuery \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/qsqlquery.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/QObject \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/QSqlError \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/qsqlerror.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/QDebug \
+		../Client/NotificationType.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o TpClient.o ../Client/TpClient.cpp
 
 main.o: ../Client/main.cpp ../../../Qt/5.15.2/gcc_64/include/QtGui/QGuiApplication \
@@ -1012,18 +1263,54 @@ main.o: ../Client/main.cpp ../../../Qt/5.15.2/gcc_64/include/QtGui/QGuiApplicati
 		../../../Qt/5.15.2/gcc_64/include/QtQml/QQmlContext \
 		../../../Qt/5.15.2/gcc_64/include/QtQml/qqmlcontext.h \
 		../Client/TcpClient.hpp \
-		../../../Qt/5.15.2/gcc_64/include/QtCore/QObject \
 		../../../Qt/5.15.2/gcc_64/include/QtNetwork/QTcpSocket \
 		../../../Qt/5.15.2/gcc_64/include/QtNetwork/qtcpsocket.h \
 		../../../Qt/5.15.2/gcc_64/include/QtNetwork/qabstractsocket.h \
 		../../../Qt/5.15.2/gcc_64/include/QtCore/QString \
 		../Client/Client.pb.h \
 		../Client/Server.pb.h \
-		../Client/NotificationTupeMoc.pb.h
+		../Client/NotificationTupeMoc.pb.h \
+		../Client/SqlContactModel.h \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/QSqlQueryModel \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/qsqlquerymodel.h \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/qtsqlglobal.h \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/qtsql-config.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/qabstractitemmodel.h \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/qsqldatabase.h \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/QSqlQuery \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/qsqlquery.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/QObject \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/QSqlError \
+		../../../Qt/5.15.2/gcc_64/include/QtSql/qsqlerror.h \
+		../../../Qt/5.15.2/gcc_64/include/QtCore/QDebug
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../Client/main.cpp
 
-qrc_qml.o: qrc_qml.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_qml.o qrc_qml.cpp
+ChatToolBar_qml.o: ChatToolBar_qml.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ChatToolBar_qml.o ChatToolBar_qml.cpp
+
+TitlePage_qml.o: TitlePage_qml.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o TitlePage_qml.o TitlePage_qml.cpp
+
+RegestrationPage_qml.o: RegestrationPage_qml.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o RegestrationPage_qml.o RegestrationPage_qml.cpp
+
+SimplePage_qml.o: SimplePage_qml.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o SimplePage_qml.o SimplePage_qml.cpp
+
+Contacts_qml.o: Contacts_qml.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Contacts_qml.o Contacts_qml.cpp
+
+main_qml.o: main_qml.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main_qml.o main_qml.cpp
+
+qmlcache_loader.o: qmlcache_loader.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qmlcache_loader.o qmlcache_loader.cpp
+
+qrc_qml_qmlcache.o: qrc_qml_qmlcache.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_qml_qmlcache.o qrc_qml_qmlcache.cpp
+
+moc_SqlContactModel.o: moc_SqlContactModel.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_SqlContactModel.o moc_SqlContactModel.cpp
 
 moc_TcpClient.o: moc_TcpClient.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_TcpClient.o moc_TcpClient.cpp

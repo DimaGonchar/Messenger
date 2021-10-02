@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_TcpClient_t {
-    QByteArrayData data[22];
-    char stringdata0[223];
+    QByteArrayData data[23];
+    char stringdata0[235];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -49,19 +49,21 @@ QT_MOC_LITERAL(13, 107, 5), // "login"
 QT_MOC_LITERAL(14, 113, 9), // "userLogin"
 QT_MOC_LITERAL(15, 123, 8), // "userPass"
 QT_MOC_LITERAL(16, 132, 12), // "regestration"
-QT_MOC_LITERAL(17, 145, 8), // "userName"
-QT_MOC_LITERAL(18, 154, 11), // "onConnected"
-QT_MOC_LITERAL(19, 166, 11), // "onReadyRead"
-QT_MOC_LITERAL(20, 178, 15), // "onErrorOccurred"
-QT_MOC_LITERAL(21, 194, 28) // "QAbstractSocket::SocketError"
+QT_MOC_LITERAL(17, 145, 11), // "confirmPass"
+QT_MOC_LITERAL(18, 157, 8), // "userName"
+QT_MOC_LITERAL(19, 166, 11), // "onConnected"
+QT_MOC_LITERAL(20, 178, 11), // "onReadyRead"
+QT_MOC_LITERAL(21, 190, 15), // "onErrorOccurred"
+QT_MOC_LITERAL(22, 206, 28) // "QAbstractSocket::SocketError"
 
     },
     "TcpClient\0newMessage\0\0str\0logIn\0signUp\0"
     "errorMessage\0error\0newUser\0user\0"
     "connectToServer\0sendMessage\0message\0"
     "login\0userLogin\0userPass\0regestration\0"
-    "userName\0onConnected\0onReadyRead\0"
-    "onErrorOccurred\0QAbstractSocket::SocketError"
+    "confirmPass\0userName\0onConnected\0"
+    "onReadyRead\0onErrorOccurred\0"
+    "QAbstractSocket::SocketError"
 };
 #undef QT_MOC_LITERAL
 
@@ -89,10 +91,10 @@ static const uint qt_meta_data_TcpClient[] = {
       10,    0,   85,    2, 0x0a /* Public */,
       11,    1,   86,    2, 0x0a /* Public */,
       13,    2,   89,    2, 0x0a /* Public */,
-      16,    3,   94,    2, 0x0a /* Public */,
-      18,    0,  101,    2, 0x08 /* Private */,
-      19,    0,  102,    2, 0x08 /* Private */,
-      20,    1,  103,    2, 0x08 /* Private */,
+      16,    4,   94,    2, 0x0a /* Public */,
+      19,    0,  103,    2, 0x08 /* Private */,
+      20,    0,  104,    2, 0x08 /* Private */,
+      21,    1,  105,    2, 0x08 /* Private */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::QByteArray,    3,
@@ -105,10 +107,10 @@ static const uint qt_meta_data_TcpClient[] = {
     QMetaType::Void,
     QMetaType::Void, QMetaType::QString,   12,
     QMetaType::Void, QMetaType::QString, QMetaType::QString,   14,   15,
-    QMetaType::Void, QMetaType::QString, QMetaType::QString, QMetaType::QString,   14,   15,   17,
+    QMetaType::Void, QMetaType::QString, QMetaType::QString, QMetaType::QString, QMetaType::QString,   14,   15,   17,   18,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 21,    7,
+    QMetaType::Void, 0x80000000 | 22,    7,
 
        0        // eod
 };
@@ -127,7 +129,7 @@ void TcpClient::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, v
         case 5: _t->connectToServer(); break;
         case 6: _t->sendMessage((*reinterpret_cast< const QString(*)>(_a[1]))); break;
         case 7: _t->login((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2]))); break;
-        case 8: _t->regestration((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2])),(*reinterpret_cast< const QString(*)>(_a[3]))); break;
+        case 8: _t->regestration((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2])),(*reinterpret_cast< const QString(*)>(_a[3])),(*reinterpret_cast< const QString(*)>(_a[4]))); break;
         case 9: _t->onConnected(); break;
         case 10: _t->onReadyRead(); break;
         case 11: _t->onErrorOccurred((*reinterpret_cast< QAbstractSocket::SocketError(*)>(_a[1]))); break;

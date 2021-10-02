@@ -1,6 +1,8 @@
-QT += quick
+QT += qml quick
 Qt +=network
 CONFIG += c++11
+CONFIG += qtquickcompiler
+QT +=sql
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -10,6 +12,8 @@ SOURCES += \
         Client.pb.cc \
         NotificationTupeMoc.pb.cc \
         Server.pb.cc \
+        SqlContactModel.cpp \
+        SqlConversationModel.cpp \
         TpClient.cpp \
         main.cpp
 
@@ -31,10 +35,15 @@ HEADERS += \
     NotificationTupeMoc.pb.h \
     NotificationType.hpp \
     Server.pb.h \
+    SqlContactModel.h \
+    SqlConversationModel.h \
     TcpClient.hpp \
 
 LIBS += -lprotobuf
+LIBS += -lpthread
+
 DISTFILES += \
+    ChatToolBar.qml \
     Client.proto \
     NotificationTupeMoc.proto \
     Server.proto

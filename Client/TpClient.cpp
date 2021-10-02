@@ -2,10 +2,12 @@
 #include "NotificationType.hpp"
 #include <QDebug>
 #include <memory>
+#include "SqlContactModel.h"
 
 TcpClient::TcpClient(QObject* parent) : QObject(parent)
 {
-     m_socket=new QTcpSocket;
+    m_socket=new QTcpSocket;
+    contacts=new SqlContactModel;
     connectToServer();
     connect(m_socket, &QTcpSocket::connected, this, &TcpClient::onConnected);
     connect(m_socket, &QTcpSocket::errorOccurred, this, &TcpClient::onErrorOccurred);
@@ -14,6 +16,7 @@ TcpClient::TcpClient(QObject* parent) : QObject(parent)
 TcpClient::~TcpClient()
 {
     delete m_socket;
+    delete  contacts;
 }
 void TcpClient::connectToServer()
 {
@@ -24,16 +27,13 @@ void TcpClient::login(const QString& userLogin, const QString& userPass)
 {
     if(userLogin.isEmpty())
     {
-        emit newMessage("empty login!");
+        return emit errorMessage("empty login!");
     }
     if(userPass.isEmpty())
     {
-        emit newMessage("empty password!");
+        return emit errorMessage("empty password!");
     }
-    else if(!userLogin.isEmpty()&&!userPass.isEmpty())
-    {
     SendLoginIn(userLogin.toStdString(),userPass.toStdString());
-    }
 }
 
 void TcpClient::SendLoginIn(const std::string& login, const std::string& pass)
@@ -47,20 +47,25 @@ void TcpClient::SendLoginIn(const std::string& login, const std::string& pass)
         signInNotification.SerializeToArray(static_cast<void*>(&m_requestForServer[0]), m_requestForServer.size());
         m_socket->write(static_cast<QByteArray>(&m_requestForServer[0]),m_requestForServer.size());
 }
-void TcpClient::regestration(const QString& userLogin, const QString& userPass, const QString& userName)
+void TcpClient::regestration(const QString& userLogin, const QString& userPass, const QString& confirmPass, const QString& userName)
 {
     if(userLogin.isEmpty())
     {
-        emit newMessage("empty login!");
+        return emit errorMessage("field login cannot empty!");
     }
     if(userPass.isEmpty())
     {
-        emit newMessage("empty password!");
+        return emit errorMessage("field confrim login cannot empty!");
     }
-    else if(!userLogin.isEmpty()&&!userPass.isEmpty())
+    if(userName.isEmpty())
     {
-      RegestrationUser(userLogin.toStdString(),userPass.toStdString(), userName.toStdString());
+        return emit errorMessage("field name cannot empty");
     }
+    if(userPass!=confirmPass)
+    {
+       return emit errorMessage("Password must match!");
+    }
+      RegestrationUser(userLogin.toStdString(),userPass.toStdString(), userName.toStdString());
 }
 void TcpClient::RegestrationUser(const std::string& login, const std::string& pass, const std::string& name)
 {
@@ -91,7 +96,8 @@ void TcpClient::onConnected()
 void TcpClient::onReadyRead()
 {
     m_dataFromServer.append(m_socket->readAll());
-    qInfo()<<m_dataFromServer;
+    qDebug()<<sizeof (m_dataFromServer)<<"bytes";
+    //qInfo()<<m_dataFromServer;
     NotificationTupeMoc m_tMoc;
     m_tMoc.ParseFromArray(m_dataFromServer, m_dataFromServer.size());
     const auto type= static_cast<NotificationType>(m_tMoc.typenotification());
@@ -113,7 +119,8 @@ void TcpClient::onReadyRead()
 
     if(type==NotificationType::SignIn)
     {
-        qInfo()<<"sign in";
+        qInfo()<<"sign in notification";
+        ServerLogInNotification m_signInNotif;
         m_signInNotif.ParseFromArray(m_dataFromServer, m_dataFromServer.size());
         if(m_signInNotif.respose()==ServerLogInNotification_Response_USER_NOT_FOUND)
         {
@@ -127,16 +134,20 @@ void TcpClient::onReadyRead()
             emit errorMessage("no correct login or password");
             return;
         }
-            qInfo()<<"succesful";
+
+          qDebug()<<m_signInNotif.users_size();
+
             emit logIn();
     }
-    if(type==NotificationType::NewUserConnect)
-    {
-        NewUserConnectNotification user;
-        user.ParseFromArray(m_dataFromServer, m_dataFromServer.size());
-        qInfo()<<"new user";
-        emit newUser("user");
-    }
+//    if(type==NotificationType::NewUserConnect)
+//    {
+//        user.ParseFromArray(m_dataFromServer, m_dataFromServer.size());
+//        qInfo()<<"new user";
+//        if(m_users->AddUserToDatabase(user.username()))
+//        {
+//          emit newUser("user");
+//        }
+//    }
    m_dataFromServer.clear();
 }
 

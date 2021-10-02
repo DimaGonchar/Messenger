@@ -16,7 +16,7 @@ Page {
         spacing: defMargin
 
         Label {
-            text: "Telegram Killer"
+            text: "Secure Chat"
             font.pointSize: 14
             font.bold: true
             Layout.alignment: Qt.AlignCenter
@@ -28,13 +28,13 @@ Page {
 
         TextField {
             id:login
-            placeholderText: "Enter your login"
+            placeholderText: "Enter login"
             Layout.fillWidth: true
         }
 
         TextField {
             id:password
-            placeholderText: "Enter your password"
+            placeholderText: "Enter password"
             Layout.fillWidth: true
         }
         Button {
