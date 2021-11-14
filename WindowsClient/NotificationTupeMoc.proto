@@ -1,0 +1,6 @@
+   syntax = "proto3";
+
+   message NotificationTupeMoc
+   {
+     uint32 typeNotification=1;
+   }

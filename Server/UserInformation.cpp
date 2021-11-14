@@ -46,7 +46,7 @@ std::string& UserInformation::GetName()
 {
 	return m_name;
 }
-const uint64_t UserInformation::GetId() const
+uint64_t UserInformation::GetId() const
 {
 	return m_id;
 }

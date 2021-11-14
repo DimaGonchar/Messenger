@@ -2,7 +2,7 @@
 #ifndef SERVER_H
 #define SERVER_H
 
-#include <QTcpServer>
+#include <QtNetwork/QTcpServer>
 #include "ChatServer.h"
 
 class Server : public QTcpServer

@@ -1,0 +1,12 @@
+release/Client.pb.o
+release/NotificationTupeMoc.pb.o
+release/Server.pb.o
+release/TpClient.o
+release/main.o
+release/TitlePage_qml.o
+release/RegestrationPage_qml.o
+release/SimplePage_qml.o
+release/main_qml.o
+release/qmlcache_loader.o
+release/qrc_qml_qmlcache.o
+release/moc_TcpClient.o

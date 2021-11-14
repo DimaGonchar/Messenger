@@ -1,6 +1,6 @@
 #pragma once
-#include <QObject>
-#include <QTcpSocket>
+#include <QtCore/QObject>
+#include <Qtnetwork/QTcpSocket>
 #include "Client.pb.h"
 #include "Server.pb.h"
 #include "UserInformation.h"

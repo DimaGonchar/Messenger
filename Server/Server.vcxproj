@@ -64,21 +64,21 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\Qt\5.15.2\msvc2019_64\include\QtQml;C:\Qt\5.15.2\msvc2019_64\include\QtSql;C:\Qt\5.15.2\msvc2019_64\include\QtNetwork;C:\Qt\5.15.2\msvc2019_64\include;C:\protobuf-3.17.3\src;C:\install\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Qt\5.15.2\msvc2019_64\include\QtSql;C:\Qt\5.15.2\msvc2019_64\include\QtNetwork;C:\Qt\5.15.2\msvc2019_64\include;C:\protobuf-3.17.3\src;C:\protobuf\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>C:\install\lib;C:\protobuf-3.17.3\Debug;C:\Qt\5.15.2\msvc2019_64\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\protobuf\lib;C:\protobuf-3.17.3\Debug;C:\Qt\5.15.2\msvc2019_64\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>libprotobuf.lib;Qt5Networkd.lib;Qt5Cored.lib;Qt5Sqld.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\Qt\5.15.2\msvc2019_64\include\QtQml;C:\Qt\5.15.2\msvc2019_64\include\QtSql;C:\Qt\5.15.2\msvc2019_64\include\QtNetwork;C:\Qt\5.15.2\msvc2019_64\include;C:\protobuf-3.17.3\src;C:\install\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Qt\5.15.2\msvc2019_64\include\QtSql;C:\Qt\5.15.2\msvc2019_64\include\QtNetwork;C:\Qt\5.15.2\msvc2019_64\include;C:\protobuf-3.17.3\src;C:\protobuf\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>C:\install\lib;C:\protobuf-3.17.3\Debug;C:\Qt\5.15.2\msvc2019_64\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\protobuf\lib;C:\protobuf-3.17.3\Debug;C:\Qt\5.15.2\msvc2019_64\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>libprotobuf.lib;Qt5Networkd.lib;Qt5Cored.lib;Qt5Sqld.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -110,6 +110,7 @@
     <ClCompile Include="ChatServer.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="Client.pb.cc" />
+    <ClCompile Include="Database.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="NotificationTupeMoc.pb.cc" />
     <ClCompile Include="Server.cpp" />
@@ -125,6 +126,7 @@
   <ItemGroup>
     <ClInclude Include="Client.pb.h" />
     <ClInclude Include="Codes.h" />
+    <ClInclude Include="Database.h" />
     <ClInclude Include="NotificationTupeMoc.pb.h" />
     <ClInclude Include="NotificationType.hpp" />
     <ClInclude Include="Server.pb.h" />

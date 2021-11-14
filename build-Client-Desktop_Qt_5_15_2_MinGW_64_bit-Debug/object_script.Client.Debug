@@ -1,0 +1,12 @@
+debug/Client.pb.o
+debug/NotificationTupeMoc.pb.o
+debug/Server.pb.o
+debug/TpClient.o
+debug/main.o
+debug/TitlePage_qml.o
+debug/RegestrationPage_qml.o
+debug/SimplePage_qml.o
+debug/main_qml.o
+debug/qmlcache_loader.o
+debug/qrc_qml_qmlcache.o
+debug/moc_TcpClient.o

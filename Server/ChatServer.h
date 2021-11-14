@@ -1,8 +1,9 @@
 #pragma once
-#include <QTcpServer>
-#include <QTcpSocket>
+#include <QtNetwork/QTcpServer>
+#include <QtNetwork/QTcpSocket>
 #include <QThread>
 #include <QVector>
+#include "Database.h"
 #include "UserInformation.h"
 #include "Server.pb.h"
 #include "Client.pb.h"
@@ -24,7 +25,7 @@ public:
     void incomingConnection(std::int64_t  socketDescriptor);
 	void RegistrationNotification(Client* destination, ServerRegistrationNotification& message, int interval);
 	void LoginInNotification(Client* destination, ServerLogInNotification& message, int interval);
-	bool Regestration(Client* client, const UserInformation& userInfo);
+	bool Regestration(Client* client, UserInformation& userInfo);
 	void SignIn(Client* client, const UserInformation& userInfo);
 	bool IfUserExists(const UserInformation& user);
 	UserInformation& GetUser(const UserInformation& user);
@@ -32,7 +33,6 @@ public:
 private slots:
 	void registrationNotificationReceived(Client* sender, const ClientRegistrationNotification& data);
 	void signInNotificationReceived(Client* sender, const ClientSignInNotification& data);
-	void sendMessageNotificationReceived(Client* sender, const ClientSendMessageNotification& data);
 public:
 	explicit ChatServer(QObject *parent);
 	~ChatServer();
@@ -41,5 +41,6 @@ private:
 	QVector<QThread*> m_availableThreads;
 	QVector<std::int64_t> m_threadsLoad;
 	QVector<Client*> m_clients;
+	Database* m_database = nullptr;
 	std::vector<UserInformation> m_registeredUsers;
 };

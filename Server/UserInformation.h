@@ -15,7 +15,7 @@ public:
 	const std::string& GetLogin()const;
 	const std::string& GetPass()const;
 	std::string& GetName();
-	const std::uint64_t GetId()const;
+	std::uint64_t GetId()const;
 	UserInformation* operator->();
 private:
 	std::string m_login;
